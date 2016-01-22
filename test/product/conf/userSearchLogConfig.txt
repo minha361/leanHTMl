@@ -1,0 +1,5 @@
+dbUser=root
+dbPass=minhlq
+docsPerPage=9000000
+dbUrl=jdbc:mysql://localhost/user_log?useUnicode=true&characterEncoding=utf-8
+

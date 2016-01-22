@@ -1,0 +1,31 @@
+[
+	{
+		"catId": 1,
+		"attributes": [
+			{
+				"id": 143,
+				"name": "màu ",
+				"weight": 0.5,
+				"is_search": true,
+				"is_internal_tag": false
+			}, {
+				"id": 248,
+				"name": "size ",
+				"weight": 0.5,
+				"is_search": true,
+				"is_internal_tag": false
+			}
+		]
+	}, {
+		"catId": 1384,
+		"attributes": [
+			{
+				"id": 171,
+				"name": "",
+				"weight": 3,
+				"is_search": true,
+				"is_internal_tag": true
+			}
+		]
+	}
+]

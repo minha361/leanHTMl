@@ -1,0 +1,15 @@
+
+<requestHandler name="/check_landing_page"
+	class="com.adr.bigdata.search.handler.landingpage.LandingPageCheckingHandler"
+	startup="lazy">
+	<lst name="defaults">
+		<str name="omitHeader">true</str>
+		<str name="wt">json</str>
+		<str name="echoParams">explicit</str>
+		<int name="rows">100</int>
+		<str name="fq">on_site:511</str>
+	</lst>
+	<lst name="appends">
+		<str name="fl">product_item_id</str>
+	</lst>
+</requestHandler>

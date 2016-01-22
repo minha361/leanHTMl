@@ -1,0 +1,35 @@
+<!-- Anh thêm dòng này vào file solrconfig.xml gốc nhé, copy cả file này vào solrconfig.xml nữa <xi:include href="solrconfig-itemneigh.xml" xmlns:xi="http://w ww.w3.org/2001/XInclude"/>
+<xi:include href="solrconfig-itemneigh-wt.xml" xmlns:xi="http://w ww.w3.org/2001/XInclude"/> -->
+
+<!--requestHandler name="/related_items_in_detail" class="com.adr.bigdata.search.handler.itemneigh.RelatedItemInDetailHandler" startup="lazy">
+<lst name="defaults">
+<str name="omitHeader">true</str>
+<str name="wt">mapped_json_related</str>
+<str name="echoParams">explicit</str>
+<int name="rows">5</int>
+</lst>
+<lst name="appends">
+<str name="final_price">def(promotion_price,sell_price)</str>
+<str name="reRankDocs">50</str>
+<str name="fq">on_site:511</str>
+<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+
+</lst>
+</requestHandler-->
+
+<requestHandler name="/related_items_in_detail" class="com.adr.bigdata.search.handler.itemneigh.RelatedItemInDetailHandler">
+	<lst name="defaults">
+		<str name="echoParams">explicit</str>
+		<str name="wt">product_json</str>
+		<str name="omitHeader">true</str>
+		<int name="rows">5</int>
+	</lst>
+	<lst name="appends">
+		<str name="final_price">def(promotion_price,sell_price)</str>
+		<str name="reRankDocs">50</str>
+		<str name="fq">on_site:511</str>
+		<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+		<str name="fq">{!vinQuery}</str>
+		<str name="fq">{!vinCollapse}</str>
+	</lst>
+</requestHandler>
