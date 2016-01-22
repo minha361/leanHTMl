@@ -1,0 +1,13 @@
+<project  default="deploy" name="test-get-filter" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<target name="deploy">
+		<delete failonerror="false">
+			<fileset dir="dist"></fileset>	
+		</delete>
+		<jar jarfile="dist/${ant.project.name}.jar" manifest="MANIFEST.MF">
+			<fileset dir="bin" />
+		</jar>
+		<copy todir="dist/conf">
+			<fileset dir="conf"></fileset>
+		</copy>
+	</target>
+</project>

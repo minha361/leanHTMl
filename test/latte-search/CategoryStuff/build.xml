@@ -1,0 +1,55 @@
+<project name="category-info" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="version">1.0.0.SNAPSHOT</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="build.classes" value="bin" />
+	<property name="build.jar" value="dist/jar" />
+	<property name="dist" value="dist/${jar.name}" />
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="lib">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve conf="lib" pattern="lib/[artifact]-[revision](-[classifier]).[ext]" />
+		<ivy:retrieve conf="solr-lib" pattern="solr-lib/[artifact]-[revision](-[classifier]).[ext]" />
+	</target>
+
+	<target name="deploy" description="build jar file">
+		<delete failonerror="false">
+			<fileset dir="${build.jar}">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+		<delete dir="dist" />
+		<jar jarfile="${build.jar}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+
+		<copy todir="${dist}">
+			<fileset dir="sbin">
+				<include name="*.sh" />
+			</fileset>
+		</copy>
+
+		<copy todir="${dist}/lib">
+			<fileset file="${build.jar}/${jar.name}.jar">
+			</fileset>
+			<fileset dir="lib">
+			</fileset>
+		</copy>
+		<copy todir="${dist}/conf">
+			<fileset dir="conf">
+			</fileset>
+		</copy>
+		<copy todir="${dist}">
+			<fileset file="core.properties">
+			</fileset>
+		</copy>
+	</target>
+</project>

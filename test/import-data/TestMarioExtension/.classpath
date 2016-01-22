@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MarioConsumer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NhbCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NhbCommonDB"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.10.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImportDataBean"/>
+	<classpathentry kind="lib" path="/MarioConsumer/lib/jdbi-2.62.jar"/>
+	<classpathentry kind="lib" path="/MarioConsumer/lib/json-smart-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/MarioConsumer/lib/hazelcast-3.4.2.jar"/>
+	<classpathentry kind="lib" path="/MarioConsumer/lib/gson-2.3.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

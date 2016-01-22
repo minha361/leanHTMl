@@ -1,0 +1,117 @@
+<project name="product" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="version">1.1.10</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="build.classes" value="bin" />
+	<property name="build.jar" value="dist/jar" />
+	<property name="dist" value="dist/${jar.name}" />
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="lib">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve conf="lib" pattern="lib/[artifact]-[revision](-[classifier]).[ext]" />
+		<ivy:retrieve conf="solr-lib" pattern="solr-lib/[artifact]-[revision](-[classifier]).[ext]" />
+	</target>
+
+	<target name="jar">
+		<delete dir="dist" failonerror="false" />
+		
+		<ant antfile="../CommonSearch/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		
+		<ant antfile="../AutoPhrase/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		
+		<property name="common.path" value="../CommonSearch"/>
+		<delete dir="bin" failonerror="false" />
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin" source="1.8" encoding="UTF-8" debug="true">
+			<classpath>
+				<fileset dir="${common.path}/lib"></fileset>
+				<fileset dir="${common.path}/solr-lib"></fileset>
+				<fileset dir="${build.jar}" />
+				<fileset dir="lib"></fileset>
+			</classpath>
+		</javac>
+		
+		<jar jarfile="${build.jar}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+
+		<ant antfile="../ProductFE/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../ProductCM/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../LandingPageSearch/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../ItemNeigh/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../CS/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../BlogSearch/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../Mobile/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+		<ant antfile="../CollectionGroupSearch/m.build.xml" target="m_jar">
+			<property name="m.build.jar">${build.jar}</property>
+		</ant>
+	</target>
+
+	<target name="deploy" description="build jar file" depends="jar">
+		<copy todir="${dist}/product">
+			<fileset dir="product">
+			</fileset>
+		</copy>
+		<copy todir="${dist}">
+			<fileset dir="sbin">
+			</fileset>
+		</copy>
+		<copy todir="${dist}/product/lib">
+			<fileset dir="lib">
+			</fileset>
+			<fileset dir="../CommonSearch/lib"></fileset>
+		</copy>
+		<copy todir="${dist}/product/lib">
+			<fileset dir="${build.jar}" />
+		</copy>
+	</target>
+
+	<property name="ivy-name" value="latte-compound"/>
+
+	<target name="deploy_1_jar" depends="jar">				
+		<jar destfile="${dist}/ivy/${ivy-name}-${version}.jar">
+			<zipgroupfileset dir="${build.jar}"></zipgroupfileset>
+		</jar>
+	</target>
+	
+	<property name="ivy.pom.version" value="${version}"/>
+
+	<target name="make-pom" depends="deploy_1_jar">
+		<ivy:makepom ivyfile="ivy.xml" pomfile="${dist}/ivy/${ivy-name}-${version}.pom" conf="ivy" artifactpackaging="bundle">
+				<mapping conf="ivy" scope="runtime"></mapping>
+		</ivy:makepom>
+	</target>
+	
+	<target name="update-ivy" depends="make-pom">
+		<sshexec command="mkdir -p /opt/nginx/lib/${ant.project.name}/${ivy-name}/${version}" host="10.220.75.133" username="root" password="rootroot" trust="true" failonerror="false" />
+		<scp todir="root@10.220.75.133:/opt/nginx/lib/${ant.project.name}/${ivy-name}/${version}" password="rootroot" trust="yes">
+			<fileset dir="${dist}/ivy" includes="${ivy-name}-${version}.*" />
+		</scp>
+	</target>
+</project>

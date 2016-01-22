@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<luceneMatchVersion>5.0.0</luceneMatchVersion>
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-clustering-\d.*\.jar" />
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/langid/lib/" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" />
+
+	<lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+
+	<lib dir="lib/" regex=".*\.jar" />
+
+	<dataDir>${solr.data.dir:}</dataDir>
+	<directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}" />
+	<codecFactory class="solr.SchemaCodecFactory" />
+	<schemaFactory class="ClassicIndexSchemaFactory" />
+	<indexConfig>
+		<lockType>${solr.lock.type:native}</lockType>
+		<infoStream>true</infoStream>
+	</indexConfig>
+	<jmx />
+
+	<!-- The default high-performance update handler -->
+	<updateHandler class="solr.DirectUpdateHandler2">
+
+		<updateLog>
+			<str name="dir">${solr.ulog.dir:}</str>
+		</updateLog>
+		<autoCommit>
+			<maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+			<openSearcher>false</openSearcher>
+		</autoCommit>
+		<commitWithin>
+			<softCommit>true</softCommit>
+		</commitWithin>
+		<autoSoftCommit>
+			<maxTime>${solr.autoSoftCommit.maxTime:3000}</maxTime>
+		</autoSoftCommit>
+	</updateHandler>
+	<query>
+		<maxBooleanClauses>1024</maxBooleanClauses>
+		<slowQueryThresholdMillis>-1</slowQueryThresholdMillis>
+		<filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<queryResultCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<documentCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<cache name="perSegFilter" class="solr.search.LRUCache" size="10" initialSize="0" autowarmCount="10" regenerator="solr.NoOpRegenerator" />
+		<cache name="nativecache" class="solr.search.LRUCache" size="2048" initialSize="1024" autowarmCount="8" regenerator="solr.NoOpRegenerator" />
+		<enableLazyFieldLoading>true</enableLazyFieldLoading>
+		<queryResultWindowSize>20</queryResultWindowSize>
+		<queryResultMaxDocsCached>200</queryResultMaxDocsCached>
+		<listener event="newSearcher" class="solr.QuerySenderListener">
+			<arr name="queries"></arr>
+		</listener>
+		<listener event="firstSearcher" class="solr.QuerySenderListener">
+			<arr name="queries">
+				<lst>
+					<str name="q">static firstSearcher warming in solrconfig.xml</str>
+				</lst>
+			</arr>
+		</listener>
+
+		<!-- Use Cold Searcher If a search request comes in and there is no current registered searcher, then immediately register the still warming searcher and use it. 
+			If "false" then all requests will block until the first searcher is done warming. -->
+		<useColdSearcher>false</useColdSearcher>
+
+		<!-- Max Warming Searchers Maximum number of searchers that may be warming in the background concurrently. An error is returned if this limit is exceeded. Recommend 
+			values of 1-2 for read-only slaves, higher for masters w/o cache warming. -->
+		<maxWarmingSearchers>4</maxWarmingSearchers>
+	</query>
+
+	<!-- The export request handler is used to export full sorted result sets. Do not change these defaults. -->
+	<requestHandler name="/export" class="solr.SearchHandler">
+		<lst name="invariants">
+			<str name="rq">{!xport}</str>
+			<str name="wt">xsort</str>
+			<str name="distrib">false</str>
+		</lst>
+		<arr name="components">
+			<str>query</str>
+		</arr>
+	</requestHandler>
+	<!-- Distributed Stream processing. -->
+	<requestHandler name="/stream" class="solr.StreamHandler">
+		<lst name="invariants">
+			<str name="wt">json</str>
+			<str name="distrib">false</str>
+		</lst>
+	</requestHandler>
+	<initParams path="/update/**,/query,/select,/tvrh,/elevate,/spell,/browse">
+		<lst name="defaults">
+			<str name="df">text</str>
+		</lst>
+	</initParams>
+	<initParams path="/update/json/docs">
+		<lst name="defaults">
+			<str name="srcField">_src_</str>
+			<str name="mapUniqueKeyOnly">true</str>
+		</lst>
+	</initParams>
+	<requestHandler name="/update/extract" startup="lazy" class="solr.extraction.ExtractingRequestHandler">
+		<lst name="defaults">
+			<str name="lowernames">true</str>
+			<str name="uprefix">ignored_</str>
+
+			<!-- capture link hrefs but ignore div attributes -->
+			<str name="captureAttr">true</str>
+			<str name="fmap.a">links</str>
+			<str name="fmap.div">ignored_</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
+	<requestHandler name="/analysis/document" class="solr.DocumentAnalysisRequestHandler" startup="lazy" />
+	<requestHandler name="/debug/dump" class="solr.DumpRequestHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="echoHandler">true</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/admin/ping" class="solr.PingRequestHandler">
+		<lst name="invariants">
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="defaults">
+			<str name="qt">standard</str>
+			<str name="echoParams">all</str>
+		</lst>
+		<str name="healthcheckFile">server-enabled.txt</str>
+	</requestHandler>
+	<admin>
+		<defaultQuery>*:*</defaultQuery>
+	</admin>
+
+	<requestHandler name="/select" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<bool name="preferLocalShards">true</bool>
+			<str name="json.nl">map</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/query" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="indent">true</str>
+			<str name="df">text</str>
+			<str name="json.nl">map</str>
+		</lst>
+	</requestHandler>
+
+	<requestDispatcher handleSelect="false">
+		<requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000" formdataUploadLimitInKB="2048" addHttpRequestToContext="false" />
+		<httpCaching never304="true" />
+	</requestDispatcher>
+
+	<queryResponseWriter name="json" class="solr.JSONResponseWriter">
+		<str name="content-type">text/plain; charset=UTF-8</str>
+	</queryResponseWriter>
+
+	<!-- Adayroi Config AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+	<requestHandler name="/dataimport" class="solr.DataImportHandler">
+		<lst name="defaults">
+			<str name="config">db-data-config.xml</str>
+			<str name="clean">false</str>
+		</lst>
+	</requestHandler>
+
+	<requestHandler name="/brandfilter" class="com.adr.bigdata.search.product.fe.BrandFilterHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/categoryfilter" class="com.adr.bigdata.search.product.fe.CategoryFilterHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/merchantfilter" class="com.adr.bigdata.search.product.fe.MerchantFilterHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/searchfilter" class="com.adr.bigdata.search.product.fe.SearchFilterHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/search" class="com.adr.bigdata.search.product.fe.SearchListingHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="fl">productid:product_id, productitemid:product_item_id, merchant_id, warehouse_id, category_id, brand_id, brand_name, pr*name</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/search_mobile" class="com.adr.bigdata.search.product.fe.MobileListingHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="fl">productid:product_id, productitemid:product_item_id, merchant_id, warehouse_id, category_id, brand_id, brand_name, pr*name</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/suggest" class="com.adr.bigdata.search.product.fe.BaseSuggestionHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="facet">true</str>
+			<str name="facet.sort">count</str>
+			<str name="facet.field">category_id</str>
+			<str name="facet.mincount">1</str>
+			<str name="facet.limit">6</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="rows">12</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/brand" class="com.adr.bigdata.search.product.fe.SearchListingHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="fl">productid:product_id, productitemid:product_item_id, merchant_id, warehouse_id, category_id, brand_id, brand_name, pr*name</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/merchant" class="com.adr.bigdata.search.product.fe.SearchListingHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="fl">productid:product_id, productitemid:product_item_id, merchant_id, warehouse_id, category_id, brand_id, brand_name, pr*name</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/category" class="com.adr.bigdata.search.product.fe.SearchListingHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+			<str name="fl">productid:product_id, productitemid:product_item_id, merchant_id, warehouse_id, category_id, brand_id, brand_name, pr*name</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/combo_by_product" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="isPromo">and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping)</str>
+			<str name="price_with_promo">if($isPromo, promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fl">
+				productid:product_id, productitemid:product_item_id, productitemname:product_item_name,
+				sellprice:sell_price, image, onsite:on_site, promotionprice:$finalPrice, 
+				ispromotion:or($isPromo, is_not_apply_commision), warehouse_id, att:vinAtt()
+			</str>
+			<str name="fq">{!term f=product_id v=$productId}</str>
+			<str name="q">*:*</str>
+			<str name="rows">100</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/combo_search" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="q">
+				_query_:{!terms f=product_id v=$productIds}
+				_query_:{!terms f=product_item_id v=$productItemIds}
+			</str>
+			<str name="fl">
+				productid:product_id,productitemid:product_item_id,warehouseid:warehouse_id,
+				merchantid:merchant_id,categoryid:category_id,servedprovinceids:served_province_ids,
+				serveddistrictids:served_district_ids,servedwardids:served_ward_ids
+			</str>
+			<str name="fq">on_site:511</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="rows">1000</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/search_combo" class="com.adr.bigdata.search.handler.CommonSearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+			<str name="keyword">*</str>
+			<int name="offset">0</int>
+			<int name="limit">9</int>
+		</lst>
+		<lst name="appends">
+			<str name="q">
+				_query_:{!terms f=product_id v=$productIds}
+				_query_:{!terms f=product_item_id v=$productItemIds}
+				_query_:{!terms f=category_path v=$catid}
+				_query_:{!df=product_item_name v=$keyword}
+			</str>
+			<str name="fl">
+				product_id,product_item_id,product_item_name,warehouse_id,sell_price,
+				promotionprice:if(is_not_apply_commision,product(if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), 
+					max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price),
+					sub(1,div(commision_fee,100))),if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), 
+					max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)),
+					is_promotion:if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), 
+					is_promotion),is_promotion_mapping),true,false),
+				image
+			</str>
+			<str name="fq">on_site:511</str>
+			<str name="fq">{!vinQuery}</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/detail" class="com.adr.bigdata.search.handler.itemneigh.RelatedItemInDetailHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+			<int name="rows">5</int>
+		</lst>
+		<lst name="appends">
+			<str name="final_price">def(promotion_price,sell_price)</str>
+			<str name="reRankDocs">50</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/checkout" class="com.adr.bigdata.search.handler.itemneigh.RuleItemNeighHandler">
+		<str name="rule">recommend-rule.txt</str>
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+			<int name="limit">20</int>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+	  		<str name="fl">product_id,product_item_id,warehouse_id,product_item_name,category_id,brand_id,brand_name</str>
+	  		<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/check_landing_page" class="com.adr.bigdata.search.handler.landingpage.LandingPageCheckingHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">json</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">100</int>
+			<str name="fq">on_site:511</str>
+		</lst>
+		<lst name="appends">
+			<str name="fl">product_item_id</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/landingpage" class="com.adr.bigdata.search.handler.landingpage.LandingPageRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+		</lst>
+	</requestHandler>
+	
+	<!-- collection-group-->
+	<requestHandler name="/section_group" class="com.adr.bigdata.search.handler.collectiongroup.CollectionGroupRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<!--<str name="wt">groupedjson</str> data return format -->
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="rows">$limit</str>
+			<str name="start">$offset</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/section_rule" class="com.adr.bigdata.search.handler.collectiongroup.CollectionGroupByRuleRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="rows">$limit</str>
+			<str name="start">$offset</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">productid:product_id,productitemid:product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+			<str name="isPromo">and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping)</str>
+			<str name="isPromoValue">if($isPromo, 100, 0)</str>
+			<str name="price_with_promo">if($isPromo, promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="percentPromo">sub(1,div($price_with_promo,sell_price))</str>	
+		</lst>
+	</requestHandler>
+	
+	<!-- search for CM backend -->
+	<requestHandler name="/search_cm" class="com.adr.bigdata.search.handler.CmBackendRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="group">true</str>
+			<str name="group.field">product_item_id_merchant_id</str>
+			<str name="group.ngroups">true</str>
+			<str name="group.limit">100</str>
+			<str name="fl">product_id,product_item_id, brand_id, category_id, create_date, image, merchant_id,
+				merchant_product_item_status, merchant_product_item_sku, product_item_status, warehouse_id,
+				product_item_id_warehouse_id,barcode, category_path, weight, visible,create_time,product_item_type</str>
+			<!-- <str name="fq">-warehouse_status:"-1"</str> -->
+		</lst>
+	</requestHandler>
+	<requestHandler name="/search_cm_backend" class="com.adr.bigdata.search.product.cm.CMBackendHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+		</lst>
+		<lst name="appends">
+			<str name="fl">merchant_id, product_id,product_item_id, brand_id, category_id, product_item_status, product_item_type, product_item_name</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/search_cm_2" class="com.adr.bigdata.search.handler.CmBackendRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="group">true</str>
+			<str name="group.field">product_item_id</str>
+			<str name="group.ngroups">true</str>
+			<str name="group.limit">100</str>
+			<str name="fl">product_item_id, product_item_id_warehouse_id, category_id, quantity,image,product_item_status,product_item_type</str>
+			<!-- <str name="fq">-warehouse_status:"-1"</str> -->
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/search_customer_service" class="com.adr.bigdata.search.product.cs.CustomerServiceHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="fl">product_id,product_item_id,warehouseid:warehouse_id</str>
+		</lst>
+	</requestHandler>
+	
+	<requestHandler name="/mobileHotPromotion" class="com.adr.bigdata.search.handler.MobileHotPromotionRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>			
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouse_id,merchant_id,category_id,brand_id,brand_name</str>
+		</lst>		
+	</requestHandler>
+	
+	<requestHandler name="/mobileGetFilter" class="com.adr.bigdata.search.product.mobile.MobileFilterHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>
+			<str name="echoParams">explicit</str>			
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="price_with_promo">if(and(and(and(max(sub(ms(NOW), start_time_discount), 0), max(sub(finish_time_discount,ms(NOW)), 0)), is_promotion),is_promotion_mapping), promotion_price, sell_price)</str>
+			<str name="finalPrice">if(is_not_apply_commision,product($price_with_promo,sub(1,div(commision_fee,100))),$price_with_promo)</str>
+			<str name="fq">{!vinQuery}</str>
+			<str name="fq">{!vinCollapse}</str>
+			<str name="facet.method">fcs</str>
+			<str name="facet.threads">8</str>
+		</lst>		
+	</requestHandler>
+	
+	<!-- Test New search -->
+	<requestHandler name="/new_search_test" class="solr.SearchHandler">
+		<!--<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">product_json</str>
+			<str name="omitHeader">true</str>
+		</lst>-->
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="omitHeader">true</str>
+			<str name="wt">product_json</str>			
+		</lst>
+						
+		<lst name="appends">
+			<str name="q">
+				_query_:{!edismax qf='product_item_name^50 brand_name barcode^1000000000 merchant_name category_tree attribute_search' v=$keyword} 
+				_query_:{!vinQueryTagSearch df=tags v=$keyword}		
+				_query_:{!vinQueryDescription df=full_description q.op=AND v=$keyword}
+				_query_:{!vinQueryDescription df=short_description q.op=AND v=$keyword}						
+			</str>
+			<str name="fl">
+				pr*name,pr*id
+			</str>
+			<!--<str name="fq">on_site:511</str>-->	
+			<!-- <str name="rows">1000</str>		 -->					
+		</lst>		
+	</requestHandler>
+	<queryParser name="vinQueryTagSearch" class="com.adr.bigdata.search.product.qparser.VinQueryTagSearchPlugin">
+		<int name="tagBoost">70</int>
+	</queryParser>
+	<queryParser name="vinQueryDescription" class="com.adr.bigdata.search.product.qparser.VinQueryDescriptionPlugin">
+		<int name="boost">30</int>
+	</queryParser>
+	<!-- Test New search -->
+	
+	<valueSourceParser name="vinFinalPrice" class="com.adr.bigdata.search.product.function.VinFunctionQuery" />
+	<valueSourceParser name="vinDef" class="com.adr.bigdata.search.product.function.VinDefaultQuery" />
+	<valueSourceParser name="vinConcat" class="com.adr.bigdata.search.product.function.VinConcatQuery" />
+	<valueSourceParser name="vinAtt" class="com.adr.bigdata.search.product.function.VinAttributeQuery" />
+	
+	<queryParser name="vinQuery" class="com.adr.bigdata.search.product.qparser.VinQueryParserPlugin"/>
+	<queryParser name="vinCollapse" class="com.adr.bigdata.search.product.qparser.VinCollapseParserPlugin"/>
+
+	<queryResponseWriter name="product_json" class="com.adr.bigdata.search.wt.NoShardingMappingJsonWriter">
+		<lst name="add">
+	  		<str name="listProduct">response.docs</str>
+	  		<str name="numFound">response.numFound</str>
+  	  	</lst>
+  	  	<str name="remove">response</str>
+	</queryResponseWriter>
+	
+	<queryResponseWriter name="default_json" class="com.adr.bigdata.search.wt.NoShardingMappingJsonWriter">
+		<str name="content-type">text/plain; charset=UTF-8</str>
+	</queryResponseWriter>
+	
+	<updateRequestProcessorChain name="vin_update_chain" default="false">
+		<processor class="com.adr.bigdata.proccessor.product.VinUpdateProccessorFactory">
+			<bool name="enable">true</bool>
+			<str name="attSearchFileName">attribute_search.json</str>
+		</processor>
+		<processor class="solr.LogUpdateProcessorFactory" />
+		<processor class="solr.RunUpdateProcessorFactory" />
+	</updateRequestProcessorChain>
+	
+	<queryParser name="autophrasingParser" class="com.lucidworks.analysis.AutoPhrasingQParserPlugin" >
+		<str name="phrases">autophrases.txt</str>
+		<str name="ignoreCase">false</str>
+		<str name="replaceWhitespaceWith">_</str>
+		<lst name="correct">
+			<str name="synonyms">autoCorrects.txt</str>
+			<str name="ignoreCase">true</str>
+			<str name="expand">false</str>
+		</lst>
+	</queryParser>
+</config>

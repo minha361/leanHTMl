@@ -1,0 +1,12 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="light-search" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java8" extends="default" description="Java 8 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+	</configurations>
+	<dependencies>
+		<dependency org="org.apache.solr" name="solr-dataimporthandler" rev="5.1.0"/>
+	</dependencies>
+</ivy-module>

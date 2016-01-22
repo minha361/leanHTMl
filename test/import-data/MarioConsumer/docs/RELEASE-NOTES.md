@@ -1,0 +1,126 @@
+# Features
+- Version 1.0.0
+  - Create a new brand, update information fields of a brand.
+  - Create a new category, update infomation fields of a category.
+  - Create a new attribute, update infomation fields of an attribute.
+  - Create a new attribute value, update infomation fields of an attribute value.
+  - Create a new Merchant, update infomation fields of a merchant.
+  - Create a new Warehouse, update infomation fields of a Warehouse.
+  - Create a new Promotion, update infomation fields of a Promotion.
+  - Create a new PromotionProductItemMapping, update infomation fields of a PromotionProductItemMapping, according list.
+  - Create a new WarehouseProductItemMapping, update infomation fields of a WarehouseProductItemMapping, according list.
+  - Create a new ProductItem, update infomation fields of a ProductItem, according list.
+- Version 1.1.0
+  - Update merchant image
+- Version 1.2.0
+  - Add Category Attribute Filter to cache
+- Version 1.3.0
+  - Add do nothing for api number 11 from CM
+- Version 2.0.1
+  - Use single ConcurrentUpdateSolrClient object for update to solr
+  - add some configurations: commit, soft commit, waitFlush, waitSearcher 
+  - add schedule full-import for suggestion
+- Version 2.1.0
+  - Change ProductItemStatus and MerchantProductItemStatus to Int
+  - Change Cityid to RecievedCityId with multi values
+- Version 2.1.0
+  - add on_site field
+  - add some config file for vn and ezibuy enviroment
+- Version 2.3.0
+  - add .sh deploy for other enviroment
+- Version 2.4.0
+  - add price_status
+  - add vat_status
+- Version 2.5.0
+  - add productItemType=3 for checking only delivery at warehouse city
+- Version 2.6.0
+  - change is_warehouse_active to warehouse_status
+- Version 2.7.0
+  - add descriotion to brand cache
+  - add display unit cache
+- Version 2.8.0
+  - add config for jenkins deploy
+  - change communication from queue to exchange
+  - change city_id to be applied with productItemPolicy
+  - Don't use discountPercent, use promotionPrice
+  - add log sCreateTime for debug
+- Version 2.9.0
+  - add score api sync
+- Version 2.10.0
+  - add LandingPage Fuction
+- Version 2.11.0
+  - add import price_flag
+- Version 2.12.0
+  - add commision bussiness
+- Version 2.13.0
+  - change measure unit keyword to attId_valueId. Add keyword to cache
+- Version 2.14.0
+  - add sync keyword, add updateTime + status to KeywordBean
+- Version 2.15.0
+  - add trending keyword
+  - add attr_[]_i
+- Version 2.16.0
+  - add sync collection group (sprint 9)
+    
+# Bugs fixed
+- Version 1.1.0
+  - fix duplicate attribute bug
+- Version 1.2.1
+  - fix category attribute filter bug: cast long to int
+- Version 1.3.0
+  - Add do nothing for api number 11 from CM
+- Version 2.0.0
+  - Use ConcurrentUpdateSolrClient
+  - full import with clean = false
+- Version 2.0.1
+  - Fix missing attributes when update productItem
+  - change schedule  full import with clean=false
+- Version 2.0.1
+  - Fix retry count
+- Version 2.3.0
+  - Check FreshFoodType equal 2 or 4
+- Version 2.4.0
+  - fix sql get all category info
+  - use sql with no lock
+  - fix catgory status
+- Version 2.4.3
+  - fix deal category length
+  - fix time zone gap
+- Version 2.4.4
+  - fix time zone gap, add utc to SimpleDateFormat constructor
+- Version 2.6.2
+  - change new dataimport config, faster and more stable; add import only for view product
+- Version 2.8.1
+  - Remove attr_*_d
+- Version 2.9.1
+  - Fix for districtsJson
+- Version 2.9.2
+  - Fix for districtsJson when list provinceIds is empty
+- Version 2.9.3
+  - Fix jsonScore to string, not json object
+- Version 2.9.4
+  - Fix jsonString: Double -> Object
+- Version 2.9.5
+  - fix multi promotion for 1 warehouseProducrItem
+- Version 2.9.6
+  - add attr_*_d to fix cm data attribute
+- Version 2.9.7
+  - Fix datetime formart thread safe
+- Version 2.9.8
+  - add PRODUCT_ITEM_ID_MERCHANT_ID for api number 9
+- Version 2.9.9
+  - check attribute status when import to cache + inport to solr
+- Version 2.9.10
+  - fix attribute duplicate
+- Version 2.10.1
+  - fix landingpage: add productItemId>0 condition
+- Version 2.10.2
+  - fix timzone independent OS
+- Version 2.11.1
+  - add gating sequence for retry ring buffer + add merchant short info
+- Version 2.14.1
+  - fix landing page, seperate landing page status and landing page group status
+- Version 2.15.1
+  - fix landing page order
+- Version 2.15.2
+  - add trending key for FE

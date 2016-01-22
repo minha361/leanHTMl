@@ -1,0 +1,89 @@
+<dataConfig>
+	<dataSource type="JdbcDataSource" name="cm"
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://@ip:@port;databaseName=@cm_db_name"
+		user="@username" 
+		password="@pass" />
+		
+	<dataSource type="JdbcDataSource" name="tracking"
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://@ip:@port;databaseName=Adayroi_Tracking"
+		user="@username" 
+		password="@pass" />
+	
+	<document>
+		
+		<entity name="product_view" dataSource="cm" transformer="com.adr.bigdata.search.index.AtomicTransformer"
+				query="select WPM.Id, case when PV.LastUpdated >= convert(date, getdate()) then ISNULL(PV.Yesterday, 0) else ISNULL(PV.ToDay, 0) end as ViewCount from Warehouse_ProductItem_Mapping WPM left join Adayroi_Tracking.dbo.ProductViews PV on WPM.ProductItemId=PV.ProductItemID" >		
+			<field column="Id" name="product_item_id_warehouse_id" key="true" />
+			<field column="ViewCount" name="viewed_day"/>
+		</entity>
+		
+		<entity name="tags" dataSource="cm" transformer="com.adr.bigdata.index.product.TagTransformer"
+				query="select WPM.Id, P_I.TagJson from ProductItem as P_I inner join Warehouse_ProductItem_Mapping as WPM on P_I.Id=WPM.ProductItemId where TagJson is not null">
+			<field column="Id" name="product_item_id_warehouse_id" />
+		</entity>
+		
+		<entity name="short_description" dataSource="cm" transformer="HTMLStripTransformer,com.adr.bigdata.search.index.AtomicTransformer" 
+				query="SELECT WPM.Id, P_I.ShortDescription FROM ProductItem AS P_I INNER JOIN Warehouse_ProductItem_Mapping AS WPM ON P_I.Id=WPM.ProductItemId WHERE ShortDescription IS NOT NULL">
+			<field column="Id" name="product_item_id_warehouse_id" key="true"/>
+			<field column="ShortDescription" name="short_description" stripHTML="true"/>
+		</entity>
+		
+		<entity name="product_element" query="[Product_Solr_New]"
+				transformer="com.adr.bigdata.index.product.ScoreTransformer,com.adr.bigdata.index.product.AdministrativeUnitTransformer,com.adr.bigdata.index.product.ProductTransformer,com.adr.bigdata.index.product.AttributeDealtailTransformer,com.adr.bigdata.index.product.LandingPageTransformer,TemplateTransformer,RegexTransformer">
+			<field column="ProductId" name="product_id" />
+			<field column="ProductId" name="product_item_group" />
+			<field column="ProductItemId" name="product_item_id" />
+			<field column="BrandId" name="brand_id" />
+			<field column="BrandName" name="brand_name" />
+			<field column="CategoryId" name="category_id" />
+			<field column="WarehouseId" name="warehouse_id" />
+			<field column="MerchantId" name="merchant_id" />
+			<field column="MerchantName" name="merchant_name" />
+			<field column="MerchantProductItemSKU" name="merchant_product_item_sku" />
+			<field column="PromotionPrice" name="promotion_price" />
+			<field column="StartDateDiscount" name="start_time_discount" utc="true" />
+			<field column="FinishDateDiscount" name="finish_time_discount" utc="true" />
+			<field column="Barcode" name="barcode" />
+			<field column="count_sell" name="count_sell" template="0" />
+			<field column="count_view" name="count_view" template="0"/>
+			<field column="SellPrice" name="sell_price" />
+			<field column="ProductItemName" name="product_item_name" builtInUnicode="true" />
+			<field column="CreateTime" name="create_time" utc="true" />
+			<field column="IsPromotion" name="is_promotion" trueIs="1" />
+			<field column="IsPromotionMapping" name="is_promotion_mapping" trueIs="1" />
+			<field column="Quantity" name="quantity" />
+			<field column="ProductItemStatus" name="product_item_status" />
+			<field column="MerchantProductItemStatus" name="merchant_product_item_status" />	
+			<field column="CityIds" name="received_city_id" splitBy="," />
+			<field column="Weight" name="weight" />            
+			<field column="IsVisible" name="visible" isVisible="true" />
+			<field column="OnSite" name="on_site" />            
+			<field column="ProductItemType" name="product_item_type" />
+			<field column="Images" name="image" />
+			<field column="VatStatus" name="vat_status" />
+			<field column="PriceStatus" name="price_status" />			
+			<field column="BoostScore" name="boost_score" />			
+			<field column="ProductItemPolicy" name="product_item_policy" />
+			<field column="PriceFlag" name="price_flag" />	
+			<entity name="attribute" 
+					query="[Product_Solr_Get_All_Attribute]"
+					cacheKey="ProductItemId" 
+					cacheLookup="product_element.ProductItemId" 
+					cacheImpl="SortedMapBackedCache"
+					transformer="com.adr.bigdata.index.product.AttributeTransformer" />
+			<entity name="category" 
+					query="[Product_Solr_Get_All_Cat_Path]"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="Id" 
+					cacheLookup="product_element.CategoryId"
+					transformer="RegexTransformer,TemplateTransformer">
+				<field column="Tree" name="category_tree" splitBy=">>" />
+				<field column="Path" name="category_path" splitBy="," />				
+			</entity>			
+			<field column="product_item_id_merchant_id" name="product_item_id_merchant_id" template="${product_element.ProductItemId}_${product_element.MerchantId}" />
+			<field column="ProductItemWarehouseId" name="product_item_id_warehouse_id" />
+		</entity>
+	</document>
+</dataConfig>

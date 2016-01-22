@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pools>
+	<pool name="adr-sqlserver">
+		<user>adruserfortest</user>
+		<password>adruserfortest@qaz</password>
+		<driverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverClassName>
+		<url>jdbc:sqlserver://10.220.75.25:1433;databaseName=Adayroi_CategoryManagement</url>
+		<minPool>1</minPool>
+		<maxPool>4</maxPool>
+
+		<idleTimeout>300000</idleTimeout>
+
+	</pool>
+	<pool name="adr-mysql">
+		<user>adruserfortest</user>
+		<password>adruserfortest@qaz</password>
+		<driverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverClassName>
+		<url>jdbc:sqlserver://10.220.75.25:1433;databaseName=Adayroi_CategoryManagement</url>
+		<minPool>1</minPool>
+		<maxPool>4</maxPool>
+
+		<idleTimeout>300000</idleTimeout>
+
+	</pool>
+</pools>

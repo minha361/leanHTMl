@@ -1,0 +1,7 @@
+<queryResponseWriter name="json_combo" class="com.adr.bigdata.search.wt.NoShardingMappingJsonWriter">
+	<lst name="add">
+		<str name="listProduct">response.docs</str>
+		<str name="numFound">response.numFound</str>
+	</lst>
+	<str name="remove">response</str>
+</queryResponseWriter>

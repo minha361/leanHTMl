@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- For Rec from version 1.2.3 -->
+<schema name="rec" version="1.5">
+
+	<field name="_root_" type="string" indexed="true" stored="false" />
+	<field name="_version_" stored="true" indexed="true" type="long" />
+	
+	<!-- Key này là một string có dạng ${type}_${product_id} -->
+	<field name="key" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+
+	<field name="product_id" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+	<field name="recs" stored="true" indexed="true" type="string" required="true" multiValued="true" />
+	<field name="type" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+
+	<uniqueKey>key</uniqueKey>
+
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" />
+	<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+
+</schema>

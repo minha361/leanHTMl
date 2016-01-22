@@ -1,0 +1,16 @@
+<requestHandler name="/combo_details" class="solr.SearchHandler" startup="lazy">
+	<lst name="defaults">
+		<str name="omitHeader">true</str>
+		<str name="wt">json_combo</str>
+		<str name="echoParams">explicit</str>
+		<int name="rows">100</int>
+	</lst>
+	<lst name="appends">
+		<str name="fq">{!terms f=product_id v=$productId}</str>
+		<str name="fl">
+			productid:product_id,productitemid:product_item_id,productitemname:product_item_name,attr_name_*_txt,
+			sellprice:sell_price,image,attr_*_txt,onsite:on_site,promotionprice:promotion_price,warehouse_id,
+			ispromotion:and(and(and(max(sub(ms(NOW),start_time_discount),0),max(sub(finish_time_discount,ms(NOW)),0)),is_promotion),is_promotion_mapping)
+		</str>
+	</lst>
+</requestHandler>

@@ -1,0 +1,336 @@
+gym,1330
+gương,1155
+j7,325
+samsung galaxy core prime,325
+từ điển tiếng nhật,1393
+ly,867
+máy nghe nhạc,374
+mũ nam,1308
+chanh,642
+bánh bao,649
+thiết bị văn phòng,545
+play station,575
+sony xperia z3,325
+vòng đeo tay miband,1803
+samsung a3,325
+xe đạp,839
+galaxy,325^60,328^60
+a5,325
+qu%u1ea1t,468
+htc one m8,325^60
+doraemon,1393
+chăn,1134,1131^60,822^60
+chuot,378^60
+bàn làm việc,806
+chocolate,706
+sony z.*,325^200
+đệm ,822
+đậu phộng,673^60,680^60,709^60
+samsung,323^60,328^60,1773^60
+xperia m4,325
+xperia z2,325
+a7,325
+cá hồi,596,656
+mít,642
+mỳ,672
+bếp,897^60
+sony e1,325
+muối,676
+pin sạc,321^60
+galaxy a3,325
+tv,399^100
+lò vi sóng,898^60
+cáp.*,346^60
+dau phong,673^60,680^60,709^60
+tivi,399^60
+sữa tươi,716,618
+đệm,825
+chảo inox,880^60
+nước hoa.*,169^60
+xe dap,839
+non,78^60,118^60
+ehon,1387
+bút chì màu,342
+tivi android,575
+1200d,408
+tủ lạnh,477
+hành tây,641
+máy ảnh chụp lấy ngay,408
+note 5,325
+gia vị,676
+zenfone.*,325^20
+galaxy s5,325
+cá,596,656^60
+samsung galaxy a7,325
+tiểu thuyết việt nam,1393
+xperia m5,325
+zenfone,325^60
+galaxy s6,325^100
+dấm,676
+sony xperia c3,325
+xperia e1,325
+yến mạch,685
+gà,603
+50 sắc thái,820
+miband,1803
+từ điển tiếng anh,1392^60
+samsung galaxy a5,325
+macbook.*,351^60
+vong deo tay suc khoe,1803
+táo,642
+bột canh,676
+bình giữ nhiệt,882,736
+quạt,468
+lumia 625,326^60
+general,1773
+ps3,575
+psp 3001,575
+man hinh,349^60,356^60
+tỏi,641
+giày thể thao,1215
+đậu,645
+tiger,696
+đồng hồ để bàn,1156
+tai nghe.*,374^60,341^60
+sony xperia z2,325
+sâm,692
+phim,431
+loa bộ,444
+đèn sạc,999^60
+sony xperia m4,325
+sony xperia e4 ,325
+﻿sữa,618
+socola,706
+sofa,1110^60,1109^60
+xoài,642
+đậu nành,709
+loa,373^60
+usb,360^60
+neptune,675
+xe trượt,839
+tủ nhựa,997
+khóa xe,1234
+den sac,999^60
+cây lau nhà,950,949
+xà phòng,220
+cà phê,713
+thịt,600
+sony xperia m5,325
+zenfone 2,325^60
+cà chua,639
+trượt ván,1362
+cá trứng,656
+tristar,1773
+yoga,1250
+bia hà nội,696
+sữa đậu nành,621
+cafe,713
+máy ghi âm,463
+cà phê cùng tony,9416
+mực,596
+giỏ hoa,1152
+bim bim,708
+rau,639
+đường,674
+ariel,954
+samsung j7,325
+xe máy,1077
+a8,325
+a3,325
+xperia z3,325
+samsung j1,325
+banh nuong,611^60
+hoa,658^20
+kim chi,649,665
+kem danh rang,245^60
+nhẫn,1^60
+lạc,673^60,680^60,709^60
+nước tương,678
+xoài.*,639^60
+bbq,679
+samsung galaxy grand prime,325
+milo,713
+kem đánh răng,243
+ổ cắm,1481
+tai nghe,341
+samsung a7,325
+đồng hồ,1156
+gạo nhật,684
+nồi sứ,877
+khóa,1104
+kangaroo,1773
+vision,861
+sữa đặc,622
+ipad.*,329^60
+samsung a5,325
+but chi mau,1440^60
+máy ảnh du lịch,408
+rau muống,640
+ống nhòm hồng ngoại,412
+túi,388
+máy giặt,490
+chúng ta rồi sẽ ổn thôi,820,1393
+ổi,642
+cháo,673
+táo.*,642^60
+trà,713
+alaska,485
+bơ,628,629^60,642^60
+dualshock,575
+điện thoại sony,325^150
+48r550,575
+chuối,642
+hạt điều,709,707
+đường kính,591^60
+chè,591^60
+s5.*,325^60
+trứng gà,613
+dao,874
+giấy vệ sinh,946,942
+dầu ăn,675
+tôm,596,656^60
+đồng hồ theo dõi sức khỏe,1803
+sữa chua,627,625
+galaxy a7,325
+sữa,716,617
+sữa chua uống,626
+hạnh nhân,591^60
+sua tuoi,619
+sony e4 ,325
+đèn,999
+rượu,696
+galaxy j5 ,325
+galaxy a8,325
+kem,143^60,617^60
+xe cân bằng,913
+may tinh,349^60
+ngũ cốc,685
+khoai tây,639
+bosch,1773
+laptop.*,350^60
+xperia e4 ,325
+gorenje,477
+trà xanh,713
+samsung s6,325
+kệ,1151
+yến,693
+áo,1^60
+nước khoáng,713
+bàn,806,1130^60,1108^60,1121^60,1185^60
+loa di động,341
+ixor,485
+sườn,600,595^60
+giấy ăn,942
+thịt gà,603
+ngô,639
+galaxy a5.*,325^100
+nệm,1138
+máy giặt teka,490
+xperia c4,325
+hl1111,547
+điều hòa,464
+sữa bột,622
+samsung a8,325
+ip6,324
+iphone 5,324^20
+s6,325
+fonepad 7,330
+ghế văn phòng,806
+galaxy a5,325
+samsung galaxy a8,325
+đèn led,998
+bếp ga,911
+samsung j5,325
+quan,41^60,81^60,18^60
+ghế,1186,806
+máy ps4,575
+xperia c3,325
+thùng đá,1295
+sony xperia e1,325
+dàn âm thanh,439
+hải sản,596
+sony xperia c4,325
+simply,675
+mì gói,671^60
+kiwi,642
+cân,892
+g530 ,325
+vay,30^60
+samsung galaxy,325^60,328^60
+s6.*,325^60
+xperia c5,325
+electrolux,490
+xúc xích,655
+miến,672
+máy sấy quần áo,489
+mì,671^200
+ip6s,324
+s5,325
+thảm,1084
+cân điện tử,257
+bút chì,342
+ps4,580
+photo,545
+dam,30^60,678^60
+tu dien tieng anh,1392^60
+galaxy core prime,325
+headphone.*,374^60,341^60
+s4.*,325^60
+note 3,325
+gạo lứt,684
+bột mì,686
+gạo,684
+tủ quần áo,818
+tạ,1261
+vali,1296^60
+sua chua,625
+máy ảnh kỹ thuật số,408
+apple,323^60,329^60
+s6 edge,325
+đồng hồ vòng tay,430
+bánh,697
+hạt giống,1006
+máy sấy,489
+bột gạo,686
+trứng,612
+giay,1215,47,1^60
+mật ong,669
+nem,657^60
+dầu oliu,675
+g531,325
+note 4,325
+banh,697,1334
+lumia,323^60
+sony xperia c5,325
+bia,713,696^20
+máy sấy tóc,534
+hành,639
+6s,324
+hành lá,639
+tivi sony 42 inch,575
+nấm,646
+sanaky,477
+khăn giấy,770
+samsung s5,325
+vtb,1773
+nồi thuỷ tinh luminarc,877
+asus fonepad 7,330
+xà đơn,1277
+galaxy j1,325
+đũa,871^60
+hành.*,639^60
+iphone.*,324^100
+khăn,750
+cà rốt,639
+pizza,649
+gối,1133^60,822^60,823^60,1295^60
+rong biển,708,707
+máy chơi game cầm tay,430
+kẹo,697
+máy hút bụi,541
+tony,820
+máy lạnh,1773
+cốc,867
+đĩa,864
+tiross,1773
+43lf630t,575

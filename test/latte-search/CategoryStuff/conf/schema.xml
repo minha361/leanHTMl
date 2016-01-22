@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="rec" version="1.5">
+	<field name="_root_" type="string" indexed="true" stored="false" />
+	<field name="_version_" stored="true" indexed="true" type="long" />
+	
+	<field name="id" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+	<field name="name" stored="true" indexed="true" type="text_tokenized_ascii" multiValued="false" />
+	<field name="tree" stored="true" indexed="true" type="string" multiValued="false" />
+	
+	<uniqueKey>id</uniqueKey>
+	
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+	
+	<fieldType name="text_tokenized_ascii" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.WordDelimiterFilterFactory" preserveOriginal="1" />
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+</schema>

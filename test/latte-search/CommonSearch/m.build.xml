@@ -1,0 +1,26 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant">	
+	<target name="m_jar">
+		<property name="m.path" value="../CommonSearch"/>
+
+		<delete failonerror="false">
+			<fileset dir="${m.path}/bin" />
+		</delete>
+		
+		<mkdir dir="${m.path}/bin"/>
+		
+		<javac srcdir="${m.path}/src" destdir="${m.path}/bin" source="1.8" encoding="UTF-8" debug="true" >
+			<classpath>
+				<fileset dir="${m.path}/lib"></fileset>
+				<fileset dir="${m.path}/solr-lib"></fileset>
+			</classpath>
+		</javac>
+		
+		<property name="m.module.name" value="latte-search"/>
+		<property name="m.module.version" value="1.0.9"/>
+
+
+		<jar jarfile="${m.build.jar}/${m.module.name}-${m.module.version}.jar">
+			<fileset dir="${m.path}/bin" />
+		</jar>
+	</target>
+</project>

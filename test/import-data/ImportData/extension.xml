@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mario>
+	<name>import-data-fe</name>
+	<datasources>
+		<sql>
+			<name>adrSQLServer</name>
+			<variables>
+				<variable name="url" type="string">jdbc:sqlserver://@db_host:@db_port;databaseName=@db_name</variable>
+				<variable name="driverClassName" type="string">com.microsoft.sqlserver.jdbc.SQLServerDriver</variable>
+				<variable name="user" type="string">@db_user</variable>
+				<variable name="password" type="string">@db_pass</variable>
+				<variable name="minpool" type="string">4</variable>
+				<variable name="maxpool" type="string">32</variable>
+				<variable name="idleTimeout" type="string">300000</variable>
+				<!-- <variable name="maxsize" type="string">1000</variable> -->
+			</variables>
+		</sql>
+		<sql>
+			<name>adrMySQL</name>
+			<variables>
+				<variable name="url" type="string">jdbc:mysql://@db_host_trending:@db_port_trending/@db_name_trending</variable>
+				<variable name="driverClassName" type="string">com.mysql.jdbc.Driver</variable>
+				<variable name="user" type="string">@db_user_trending</variable>
+				<variable name="password" type="string">@db_pass_trending</variable>
+				<variable name="minpool" type="string">4</variable>
+				<variable name="maxpool" type="string">32</variable>
+				<variable name="idleTimeout" type="string">300000</variable>
+			</variables>
+		</sql>
+	</datasources>
+
+	<solrs>
+		<entry>
+			<name>adr</name>
+			<url>http://@solr_host:@solr_port/solr/product</url>
+			<queuesize>128</queuesize>
+			<numthread>4</numthread>
+		</entry>
+	</solrs>
+
+	<gateways>
+		<rabbitmq>
+			<name>default_rabbitmq</name>
+			<variables>
+				<variable name="host" type="string">@rabbitmq_host</variable>
+				<variable name="port" type="integer">@rabbitmq_port</variable> <!-- 5672 -->
+				<variable name="userName" type="string">@rabbitmq_user</variable>
+				<variable name="password" type="string">@rabbitmq_pass</variable>
+				<variable name="queueName" type="string">@rabbitmq_queue_name</variable> <!-- big_data_queue -->
+				<variable name="exchange" type="string">@rabbitmq_exchange_name</variable> <!-- big_data_exchange -->
+			</variables>
+		</rabbitmq>
+	</gateways>
+
+	<handlers>
+		<lifecycle>
+			<entry>
+				<handler>com.adr.bigdata.indexing.OnStartupHandler</handler>
+				<variables>
+					<variable name="dataSourceName" type="string">adrSQLServer</variable>
+					<variable name="deltaTimeUpdateCache" type="integer">600000</variable>
+				</variables>
+			</entry>
+			<entry>
+				<handler>com.adr.bigdata.indexing.UpdateTrendingHandler</handler>
+				<variables>
+					<variable name="dataSourceName" type="string">adrMySQL</variable>
+					<variable name="deltaTimeUpdateTrending" type="integer">60000</variable>
+				</variables>
+			</entry>
+		</lifecycle>
+
+		<request>
+			<entry>
+				<handler>com.adr.bigdata.indexing.OnDataUpdateHandler</handler>
+				<worker>8</worker>
+				<ringbuffersize>128</ringbuffersize>
+				<gateways>
+					<entry>default_rabbitmq</entry>
+				</gateways>
+				<variables>
+					<variable name="categoryCoreImport" type="string">
+						http://@solr_host:@solr_port/solr/category-info/import?cmd=import
+					</variable>
+					<variable name="solrConfigName" type="string">adr</variable>
+					<variable name="numDocPerRequest" type="integer">10000</variable>
+					<variable name="dataSourceName" type="string">adrSQLServer</variable>
+					<variable name="commit" type="boolean">false</variable>
+					<variable name="waitFlush" type="boolean">true</variable>
+					<variable name="waithSearcher" type="boolean">true</variable>
+					<variable name="softCommit" type="boolean">true</variable>
+					<variable name="timeZoneGap" type="integer">7</variable>
+				</variables>
+			</entry>
+		</request>
+	</handlers>
+</mario>

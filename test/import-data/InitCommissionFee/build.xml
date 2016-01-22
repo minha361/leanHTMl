@@ -1,0 +1,44 @@
+<project name="init-commission-fee" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="lib">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="deploy">
+		<delete failonerror="false">
+			<fileset dir="dist">
+			</fileset>
+			<fileset dir="bin">
+			</fileset>
+		</delete>
+		<javac srcdir="src" destdir="bin" source="1.8" encoding="UTF-8" debug="true">
+			<classpath>
+				<fileset dir="lib">
+				</fileset>
+			</classpath>
+		</javac>
+		<jar jarfile="dist/${ant.project.name}.jar">
+			<fileset dir="bin" />
+		</jar>
+		<copy todir="dist/lib">
+			<fileset dir="lib">
+			</fileset>
+		</copy>
+		<copy todir="dist/conf">
+			<fileset dir="conf">
+			</fileset>
+		</copy>
+		<copy todir="dist">
+			<fileset dir="sbin">
+			</fileset>
+		</copy>
+	</target>
+</project>

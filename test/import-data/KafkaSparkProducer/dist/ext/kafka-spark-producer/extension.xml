@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mario>
+
+	<name>kafka-spark-producer</name>
+
+	<datasources>
+		<sql>
+			<name>adrSQLServer</name>
+			<variables>
+				<variable name="url" type="string">jdbc:sqlserver://10.220.75.25:1433;databaseName=Adayroi_CategoryManagement
+				</variable>
+				<variable name="driverClassName" type="string">com.microsoft.sqlserver.jdbc.SQLServerDriver</variable>
+				<variable name="user" type="string">adruserfortest</variable>
+				<variable name="password" type="string">adruserfortest@qaz</variable>
+				<variable name="minpool" type="string">4</variable>
+				<variable name="maxpool" type="string">32</variable>
+				<!-- <variable name="maxsize" type="string">1000</variable> -->
+				<variable name="idleTimeout" type="string">300000</variable>
+				<!-- <variable name="validator" type="string">[ConnetionValidator implementation]</variable> -->
+				<!-- <variable name="decoder" type="string">[PasswordDecoder implementation]</variable> -->
+			</variables>
+		</sql>
+	</datasources>
+
+	<gateways>
+<!-- 		<http>
+			<name>default_http</name>
+			<deserializer>com.package.of.DeserializerClass</deserializer>
+			<variables>
+				<variable name="port" type="integer">8889</variable>
+			</variables>
+		</http> -->
+		
+		<rabbitmq>
+		<name>kafka_spark_producer</name> 
+		<!-- <deserializer>com.package.of.DeserializerClass</deserializer>  -->
+		<variables> 
+			<variable name="host" type="string">10.220.75.133</variable> <variable name="port" type="integer">5672</variable> <variable 
+			name="userName" type="string">admin</variable> <variable name="password" type="string">admin</variable> <variable name="queueName" 
+			type="string">kafka_spark_queue</variable> 
+		</variables>
+		</rabbitmq>
+		
+	</gateways>
+
+	<handlers>
+		<request>
+			<entry>
+				<handler>com.adr.bigdata.dataimport.MainRequestHandler</handler>
+			<!-- 	<worker>1</worker> -->
+				<worker>8</worker>
+				<ringbuffersize>128</ringbuffersize>
+				<gateways>
+					<entry>kafka_spark_producer</entry>
+					<!-- <entry>default_http</entry> -->
+				</gateways>
+				<variables>
+					<variable name="numDocPerRequest" type="integer">500</variable>
+					<variable name="dataSourceName" type="string">adrSQLServer</variable>
+					<variable name="solrZKHost" type ="string">10.220.75.80:9093,10.220.75.81:9093,10.220.75.82:9093</variable>
+					<variable name="batchSize" type ="integer">500</variable>
+					<variable name="threshold" type = "integer">10</variable>
+					<variable name="collection" type="string">commit_policy_product</variable>
+					<variable name="sparkMaster" type="string">spark://10.220.75.79:7077</variable>
+					<variable name="debugOption" type="boolean"> true </variable>
+					<variable name="checkUpdateTime" type="boolean">false</variable>
+					<variable name="metadata.broker.list" type="string">10.220.75.87:9092,10.220.75.87:9094,10.220.75.87:9095,10.220.75.87:9096</variable>
+					<variable name="serializer.class" type="string">com.adr.bigdata.dataimport.kafka.SolrInputDocumentEncoder</variable>
+					<variable name="kafka.zk.connect" type="string">10.220.75.87:9093</variable>
+					<!-- <variable name="topic" type="string">dataimport</variable> -->
+					<variable name="topic" type="string">dataImport2</variable>
+					<variable name="numberOfCores" type="integer">2</variable>
+				</variables>
+			</entry>
+		</request>
+	</handlers>
+</mario>

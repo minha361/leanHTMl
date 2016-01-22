@@ -1,0 +1,33 @@
+# Features
+	- Version 0.1.0
+		- Thực hiện deal_search handler
+	- Version 1.0.0
+		- Bổ sung deal_related
+
+# Bug fix
+	- Version 1.0.1
+		- Thêm deploy file cho DealSearch
+	- Version 1.0.2
+		- Fix theo us được sửa ngày 9/10/2015
+	- Version 1.0.3
+		- bỏ exclude price 
+	- Version 1.0.4
+		- fix bug null catid when search + return user filter category leaf
+	- Version 1.0.5
+		- fix category leaf bug + and array params not null but contain empty string
+	- Version 1.0.6
+		- fix deal follow email 13/10/2015
+	- Version 1.0.7
+		- fix default + append params
+	- Version 1.0.8
+		- fix lỗi sai chính tả
+	- Version 1.0.9
+		- fix listCategory for search only
+	- Version 1.0.10
+		- fix loi tra ra qua nhieu facet category level 3 khi listing
+	- Version 1.0.11
+		- fix loi khong tra ve ket qua, de reranking doc ve 200
+	- Version 1.0.12
+		- Sử dụng latte-search-1.0.3
+	- Version 1.1.1
+		- Fix deal excaption error

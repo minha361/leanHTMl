@@ -1,0 +1,148 @@
+category_path=324 AND product_item_name:"iphone 4" => category_path:338 AND product_item_name:"iphone 4"
+category_path=324 AND product_item_name:"iphone 5" => category_path:338 AND product_item_name:"iphone 5"
+category_path=324 AND product_item_name:"iphone 6" => category_path:338 AND product_item_name:"iphone 6"
+category_path=323 AND product_item_name:samsung => category_path:338 AND product_item_name:samsung
+category_path=323 AND product_item_name:htc => category_path:338 AND product_item_name:htc
+category_path=323 AND product_item_name:lg => category_path:338 AND product_item_name:lg
+category_path=326 AND product_item_name:lumia => category_path:338 AND product_item_name:lumia
+category_path=323 AND product_item_name:Oppo => category_path:338 AND product_item_name:Oppo
+category_path=323 AND product_item_name:Asus => category_path:338 AND product_item_name:Asus
+category_path=326 AND product_item_name:Microsoft => category_path:338 AND product_item_name:Microsoft
+category_path=323 AND product_item_name:Sony => category_path:338 AND product_item_name:Sony
+category_path=323 AND product_item_name:Qmobile => category_path:338 AND product_item_name:Qmobile
+category_path=326 AND product_item_name:BlackBerry => category_path:338 AND product_item_name:BlackBerry
+category_path=329 AND product_item_name:ipad => category_path:338 AND product_item_name:ipad
+category_path=330 AND product_item_name:"máy tính bảng" => category_path:338 AND product_item_name:"máy tính bảng"
+category_path=5 => category_path:20 OR category_path:32 => brand_name:$brand_name^100
+category_path=6 => category_path:31 => brand_name:$brand_name^100
+category_path=8 => category_path:19 => brand_name:$brand_name^100
+category_path=8 => category_path:19 => brand_name:$brand_name^100
+category_path=13 => category_path:8 => brand_name:$brand_name^100
+category_path=15 => category_path:20 => brand_name:$brand_name^100
+category_path=16 => category_path:8 => brand_name:$brand_name^100
+category_path=17 => category_path:27 => brand_name:$brand_name^100
+category_path=19 => category_path:8 => brand_name:$brand_name^100
+category_path=23 => category_path:6 => brand_name:$brand_name^100
+category_path=32 => category_path:5 => brand_name:$brand_name^100
+category_path=34 => category_path:3 => brand_name:$brand_name^100
+category_path=36 => category_path:32 => brand_name:$brand_name^100
+category_path=38 => category_path:35 => brand_name:$brand_name^100
+category_path=42 => category_path:43 => brand_name:$brand_name^100
+category_path=43 => category_path:42 => brand_name:$brand_name^100
+category_path=44 => category_path:41 => brand_name:$brand_name^100
+category_path=48 => category_path:46 => brand_name:$brand_name^100
+category_path=50 => category_path:46 => brand_name:$brand_name^100
+category_path=52 => category_path:46 => brand_name:$brand_name^100
+category_path=53 => category_path:46 => brand_name:$brand_name^100
+category_path=56 => category_path:46 => brand_name:$brand_name^100
+category_path=57 => category_path:46 => brand_name:$brand_name^100
+category_path=59 => category_path:58 => brand_name:$brand_name^100
+category_path=111 => category_path:87 OR category_path:103 OR category_path:82 OR category_path:115 OR category_path:114 OR category_path:100
+category_path=114 => category_path:87 OR categORy_path:103 OR categORy_path:111 OR categORy_path:115 OR categORy_path:82 OR categORy_path:100
+category_path=143 => category_path:140 AND NOT category_path:143 => brand_name:$brand_name^100
+category_path=144 => category_path:140 AND NOT category_path:144 => brand_name:$brand_name^100
+category_path=145 => category_path:140 AND NOT category_path:146 => brand_name:$brand_name^100
+category_path=147 => category_path:140 AND NOT category_path:147 => brand_name:$brand_name^100
+category_path=149 => category_path:140 AND NOT category_path:149 => brand_name:$brand_name^100
+category_path=152 => category_path:140 AND NOT category_path:152 => brand_name:$brand_name^100
+category_path=155 => category_path:140 AND NOT category_path:155 => brand_name:$brand_name^100
+category_path=167 => category_path:140 AND NOT category_path:167 => brand_name:$brand_name^100
+category_path=167 => category_path:140 AND NOT category_path:167 => brand_name:$brand_name^100
+category_path=171 => category_path:169 => brand_name:$brand_name^100
+category_path=244=> category_path:243
+category_path=251 => category_path:1474 AND NOT category_path:251
+category_path=252 => category_path:1474 AND NOT category_path:252
+category_path=253 => category_path:1474 AND NOT category_path:253
+category_path=267 => category_path:226
+category_path=272 => category_path:270 
+category_path=334 => category_path:390
+category_path=339 => category_path:338 AND NOT category_path:339 
+category_path=341 => category_path:338 AND NOT category_path:341
+category_path=342 => category_path:338 AND NOT category_path:342 
+category_path=344 => category_path:338 AND NOT category_path:344 
+category_path=345 => category_path:338 AND NOT category_path:345
+category_path=346 => category_path:338 AND NOT category_path:346
+category_path=348 => category_path=338 AND NOT category_path=348
+category_path=351 AND product_item_name:Apple => category_path:338 AND product_item_name:Apple
+category_path=351 AND product_item_name:Asus => category_path:338 AND product_item_name:Asus
+category_path=354 => category_path:356 => brand_name:$brand_name^100
+category_path=356 => category_path:354 => brand_name:$brand_name^100
+category_path=359 => category_path:349 AND NOT category_path:359
+category_path=3609 => category_path:349 AND NOT category_path:360
+category_path=366 => category_path:362 AND NOT category_path:366
+category_path=370 => category_path:362 AND NOT category_path:370
+category_path=373 => category_path:372 AND NOT category_path:373
+category_path=374 => category_path:372 AND NOT category_path:374
+category_path=375 => category_path:372 AND NOT category_path:375
+category_path=377 => category_path:376 AND NOT category_path:377
+category_path=378 => category_path:376 AND NOT category_path:378
+category_path=379 => category_path:376 AND NOT category_path:379
+category_path=383 => category_path:390 AND product_item_name:"cáp mạng"
+category_path=717 => category_path:732 AND NOT category_path=717
+category_path=736=> category_path:732 AND NOT category_path=736
+category_path=737=> category_path:732 AND NOT category_path=737
+category_path=738=> category_path:732 AND NOT category_path=738
+category_path=743=> category_path:732 AND NOT category_path=743
+category_path=744=> category_path:732 AND NOT category_path=744
+category_path=745=> category_path:732 AND NOT category_path=745
+category_path=746=> category_path:732 AND NOT category_path=746
+category_path=733=> category_path:732 AND NOT category_path=733
+category_path=734=> category_path:732 AND NOT category_path=734
+category_path=735=> category_path:732 AND NOT category_path=735
+category_path=956=> category_path:957 OR category_path: 958
+category_path=957=> category_path:956 OR category_path: 958
+category_path=958=> category_path:957 OR category_path: 956
+category_path=1807=> category_path:1101 OR category_path: 1104 OR category_path: 1102 OR category_path: 1017
+category_path=915=> category_path:642
+category_path=60 => category_path:58 AND NOT category_path=60 
+category_path=61 => category_path:58 AND NOT category_path=61 
+category_path=62 => category_path:58 AND NOT category_path=62
+category_path=63 => category_path:58 AND NOT category_path=63
+category_path=64 => category_path:67
+category_path=80 => category_path:67 AND NOT category_path=80 
+category_path=68 => category_path:67 AND NOT category_path=68
+category_path=75 => category_path:67 AND NOT category_path=75
+category_path=76 => category_path:67 AND NOT category_path=76
+category_path=77 => category_path:67 AND NOT category_path=77
+category_path=78 => category_path:67 AND NOT category_path=78
+category_path=82 => category_path:87 OR category_path:103 OR category_path:111 OR category_path:115 OR category_path:114 OR category_path:100
+category_path=83 => category_path:86 OR category_path:101 OR category_path:115 OR category_path:112 OR category_path:100
+category_path=86 => category_path:83 OR category_path:101 OR category_path:115 OR category_path:112 OR category_path:100
+category_path=87 => category_path:82 OR category_path:103 OR category_path:111 OR category_path:115 OR category_path:114 OR category_path:100
+category_path=90 => category_path:88 OR category_path:92 OR (category_path:104 AND NOT category_name:dép)
+category_path=91 => category_path:88 OR category_path:92 OR (category_path:104 AND NOT category_name:dép)
+category_path=92 => category_path:88 OR (category_path:104 AND NOT category_name:dép) OR category_path:100
+category_path=94 => category_path:95 OR category_path:83 OR category_path:101 OR category_path:100
+category_path=95 => category_path:94 OR category_path:83 OR category_path:101 OR category_path:100
+category_path=96 => category_path:101 OR category_path:104 OR category_path:113 OR category_path:83
+category_path=101 => category_path:87 OR category_path:82 category_path:86 OR category_path:83 OR category_path:115  OR category_path:100
+category_path=105 => category_path:83 OR category_path:101 OR category_path:94 OR category_path:100
+category_path=106 => category_path:83 OR category_path:101 OR category_path:94 OR category_path:100 OR category_path:86
+category_path=104 AND category_name:giày => (category_path:119 AND category_name:tất) OR category_path:87 OR category_path:103 OR category_path:82 OR category_path:115 OR category_path:114 OR category_path:100
+category_path=128 => category_path:121 AND NOT category_path=128 
+category_path=123 => category_path:121 AND NOT category_path=123 
+category_path=122 => category_path:121 AND NOT category_path=122 
+category_path=130 => category_path:121 AND NOT category_path=130 
+category_path=133 => category_path:131
+category_path=138=> category_path:131
+category_path=388 => category_path:387 AND NOT category_path:388
+category_path=389 => category_path:387 AND NOT category_path:389
+category_path=390 => category_path:387 AND NOT category_path:390
+category_path=391 => category_path:387 AND NOT category_path:391
+category_path=392 => category_path:387 AND NOT category_path:392
+category_path=394=> category_path:387 AND NOT category_path:394
+category_path=397 => category_path:395 AND NOT category_path:397
+category_path=396 => category_path:395 AND NOT category_path:396
+category_path=398 => category_path:395 AND NOT category_path:398
+category_path=399 AND NOT category_path=406 => category_path:406
+category_path=462 => category_path:1850
+category_path=406 => category_path:399
+category_path=406 => category_path:416
+category_path=416 => category_path:416
+category_path=436 => category_path:443
+category_path=477 => category_path:884 OR (category_path:1483 AND product_item_name:"khuôn làm nước đá")
+category_path=489 => category_path:995 OR category_path:938
+category_path=546 => category_path:568 OR category_path:1439
+category_path=536 => category_path:939 AND product_item_name:"cầu là"
+category_path=1804 => category_path:406 OR category_path:1846
+category_path=462 => category_path:461

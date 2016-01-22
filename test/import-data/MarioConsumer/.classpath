@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/disruptor-3.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-api-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-core-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-slf4j-impl-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.7.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-simple-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/msgpack-0.6.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-1.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-smart-2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/amqp-client-3.5.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-continuation-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-http-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-io-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-server-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-servlets-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jetty-util-9.3.0.M2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/dbpool-7.0-jdk7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbi-2.62.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gson-2.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/guava-18.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sqljdbc41.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/annotations-1.3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hazelcast-3.4.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/minimal-json-0.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpclient-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpmime-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/noggit-0.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/solr-solrj-5.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/stax2-api-3.1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/woodstox-core-asl-4.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/zookeeper-3.4.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/mail-1.5.0-b01.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/activation-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-pool2-2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jedis-2.8.0.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/NhbCommon"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/NhbCommonDB"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImportDataBean"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

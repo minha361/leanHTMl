@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mario>
+
+	<name>test-mario-extension</name>
+
+	<gateways>
+		<http>
+			<name>test</name>
+			<!-- <deserializer>com.package.of.DeserializerClass</deserializer> -->
+			<variables>
+				<variable name="port" type="integer">8889</variable>
+			</variables>
+		</http>
+	</gateways>
+
+	<handlers>
+		<request>
+			<entry>
+				<handler>com.mario.consumer.test.TestLog4jSendEmailHandler</handler>
+				<worker>64</worker>
+				<ringbuffersize>1048576</ringbuffersize>
+				<gateways>
+					<entry>test</entry>
+				</gateways>
+			</entry>
+		</request>
+	</handlers>
+
+</mario>

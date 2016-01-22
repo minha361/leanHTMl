@@ -1,0 +1,42 @@
+<project name="import-data-redis" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="version">1.0.0</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="dist" value="dist/${jar.name}" />
+
+	<target name="clean-cache" description="clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="lib">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="deploy">
+		<delete dir="bin" failonerror="false" />
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" source="1.8" encoding="UTF-8" debug="true">
+			<classpath>
+				<fileset dir="lib">
+				</fileset>
+			</classpath>
+		</javac>
+
+		<delete dir="dist" failonerror="false" />
+		<mkdir dir="dist" />
+		<jar jarfile="dist/jars/${jar.name}.jar">
+			<fileset dir="bin" />
+		</jar>
+		<mkdir dir="${dist}" />
+		<copy todir="${dist}">
+			<fileset dir="dist/jars" />
+			<fileset dir="sbin" />
+		</copy>
+		<copy todir="${dist}/lib">
+			<fileset dir="lib" />
+		</copy>
+	</target>
+</project>

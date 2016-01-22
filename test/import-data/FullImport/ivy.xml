@@ -1,0 +1,18 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="light-search" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java8" extends="default" description="Java 8 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+	</configurations>
+	<dependencies>
+		<dependency org="log4j" name="log4j" rev="1.2.17"/>
+		<dependency org="net.minidev" name="json-smart" rev="2.1.1" />
+		<dependency org="lib.mssql" name="sqljdbc4" rev="3.0" />
+		<dependency org="redis.clients" name="jedis" rev="2.8.0"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.13"/>
+		<dependency org="com.google.guava" name="guava" rev="19.0"/>
+		
+	</dependencies>
+</ivy-module>

@@ -1,0 +1,14 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="light-search" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java8" extends="default" description="Java 8 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+		<conf name="lib"></conf>
+		<conf name="solr-lib"></conf>
+	</configurations>
+	<dependencies>
+		<dependency org="lib.latte-search" name="latte-search" rev="1.0.8.beta.4" conf="lib->default" />	
+	</dependencies>
+</ivy-module>

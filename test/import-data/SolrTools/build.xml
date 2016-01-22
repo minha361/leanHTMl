@@ -1,0 +1,52 @@
+<project name="ProductTransformer" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<!-- some variables used -->
+	<property name="app-name">ProductTransformer</property>
+	<property name="version">1.0.0</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property file="build.properties" />
+	<property name="build.classes" value="bin" />
+	<property name="src.dir" value="src" />
+	<property name="dist" value="dist" />
+	<property name="lib.dir" value="lib" />
+
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="${lib.dir}">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="build" depends="prep" description="build jar file">
+		<jar jarfile="${dist}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+	</target>
+
+	<target name="deploy" depends="build" description="copy nessesary files to dist folder">
+		<copy todir="${deploy.path}">
+			<fileset dir="${dist}" />
+			<fileset dir="lib">
+			</fileset>
+		</copy>
+	</target>
+	<target name="update-ivy" depends="deploy">
+		<sshexec command="mkdir -p /opt/nginx/lib/product-transformer/ProductTransformer/${version}" host="10.220.75.133" username="root" password="rootroot" trust="true" failonerror="false" />
+		<scp todir="root@10.220.75.133:/opt/nginx/lib/product-transformer/ProductTransformer/${version}" password="rootroot" trust="yes">
+			<fileset dir="${dist}" />
+		</scp>
+	</target>
+</project>

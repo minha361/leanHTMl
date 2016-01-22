@@ -1,0 +1,244 @@
+package com.adr.bigdata.dataimport.logic.impl.docgen;
+
+import com.adr.bigdata.indexing.db.sql.models.CachedModel;
+import com.nhb.common.data.*;
+import com.adr.bigdata.indexing.db.sql.daos.*;
+
+import org.apache.solr.common.SolrInputDocument;
+
+import com.adr.bigdata.indexing.db.sql.vos.*;
+import com.adr.bigdata.indexing.db.sql.beans.*;
+import com.adr.bigdata.indexing.utils.*;
+import com.adr.bigdata.indexing.vos.AttributeValueVO;
+import com.adr.bigdata.indexing.vos.ProductItemVO;
+
+import java.util.*;
+
+public class ProductItemDocGenDummyV2 extends CachedModel {
+	public static final String PI_ID = "productItemId";
+	public static final String PI_PRODUCT_ID = "productId";
+	public static final String PI_BRAND_ID = "brandId";
+	public static final String PI_BRAND_NAME = "brandName";
+	public static final String PI_CAT_ID = "categoryId";
+	public static final String PI_BARCODE = "barcode";
+	public static final String PI_PRODUCT_ITEM_NAME = "productItemName";
+	public static final String PI_PRODUCT_ITEM_STATUS = "productItemStatus";
+	public static final String PI_FRESH_FOOD_TYPE = "freshFoodType";
+	public static final String PI_WEIGHT = "weight";
+	public static final String PI_CREATE_TIME = "createTime";
+	public static final String PI_SOLR_FE_PRODUCT_ATTRIBUTE = "solrFeProductAttribute";
+	public static final String PI_ATT_ID = "attributeId";
+	public static final String PI_ATT_NAME = "attributeName";
+	public static final String PI_ATT_VALUE_ID = "attributeValueId";
+	public static final String PI_ATT_VALUE = "attributeValue";
+	public static final String PI_ATT_STATUS = "attributeStatus";
+	public static final String PI_WH_PI_MAPPING = "warehouseProductItemMapping";
+	public static final String PI_WH_PI_MAPPING_ID = "warehouseProductItemMappingId";
+	public static final String PI_MC_ID = "merchantId";
+	public static final String PI_WH_ID = "warehouseId";
+	public static final String PI_MC_NAME = "merchantName";
+	public static final String PI_MC_SKU = "merchantSKU";
+	public static final String PI_ORI_PRICE = "originalPrice";
+	public static final String PI_SELL_PRICE = "sellPrice";
+	public static final String PI_QUANTITY = "quantity";
+	public static final String PI_SAFETY_STOCK = "safetyStock";
+	public static final String PI_MC_PI_STATUS = "merchantProductItemStatus";
+
+	// ADD 07-05-2015
+	public static final String PI_BRAND_STATUS = "brandStatus";
+	public static final String PI_CATEGORY_NAME = "categoryName";
+	public static final String PI_CATEGORY_STATUS = "categoryStatus";
+	public static final String PI_PRODUCT_ITEM_TYPE = "productItemType";
+	public static final String PI_CATEGORY_PATH = "categoryPath";
+	public static final String PI_IMAGE = "image";
+	public static final String PI_UPDATE_TIME = "updateTime";
+	public static final String PI_MERCHANT_STATUS = "merchantStatus";
+	public static final String PI_WAREHOUSE_STATUS = "warehouseStatus";
+	public static final String PI_PROVINCE_ID = "provinceId";
+
+	// add 16-05-2015
+	public static final String PI_IS_VISIBLE = "isVisible";
+
+	public static final String PI_VAT_STATUS = "vatStatus";
+	public static final String PI_PRICE_STATUS = "priceStatus";
+	
+	private void newProductItem(Collection<PuObject> productItems) {
+		List<Integer> updatedWarehouseProductItemMappingIds = new ArrayList<Integer>();
+		List<Long> updatedWarehouseProductItemMappingIdTimes = new ArrayList<Long>();
+		List<Integer> updatedProductItemIds = new ArrayList<Integer>();
+		List<Long> updatedProductItemIdTimes = new ArrayList<Long>();
+
+		// Get batch last update time from cache
+		Set<Integer> productItemIds = new HashSet<Integer>();
+		Set<Integer> brandIds = new HashSet<Integer>();
+		Set<Integer> categoryIds = new HashSet<Integer>();
+		Set<Integer> merchantIds = new HashSet<Integer>();
+		Set<Integer> warehouseIds = new HashSet<Integer>();
+		Set<Integer> warehousePIMappingIds = new HashSet<Integer>();
+		List<ProductItemVO> piVOs = new ArrayList<ProductItemVO>();
+		for (PuObject productItem : productItems) {
+			Integer productItemId = productItem.getInteger(PI_ID);
+			Long updateTime = productItem.getLong(PI_UPDATE_TIME);
+			Integer productId = productItem.getInteger(PI_PRODUCT_ID);
+			Integer brandId = productItem.getInteger(PI_BRAND_ID);
+			String brandName = productItem.getString(PI_BRAND_NAME);
+			Integer categoryId = productItem.getInteger(PI_CAT_ID);
+			String barcode = productItem.getString(PI_BARCODE);
+			String productItemName = productItem.getString(PI_PRODUCT_ITEM_NAME);
+			Integer productItemStatus = productItem.getInteger(PI_PRODUCT_ITEM_STATUS);
+			Integer freshFoodType = productItem.getInteger(PI_FRESH_FOOD_TYPE);
+			Double weight = productItem.getDouble(PI_WEIGHT);
+			String sCreateTime = productItem.getString(PI_CREATE_TIME);
+			Integer brandStatus = productItem.getInteger(PI_BRAND_STATUS);
+			Integer categoryStatus = productItem.getInteger(PI_CATEGORY_STATUS);
+			List<Long> categoryPath = (List<Long>) productItem.getLongArray(PI_CATEGORY_PATH);
+			Integer productItemType = productItem.getInteger(PI_PRODUCT_ITEM_TYPE);
+			String image = productItem.getString(PI_IMAGE);
+			if (productItemId == null || productId == null || brandId == null || brandName == null
+					|| brandStatus == null || categoryId == null || categoryStatus == null || categoryPath == null
+					|| barcode == null || productItemName == null || productItemStatus == null || freshFoodType == null
+					|| productItemType == null || weight == null || sCreateTime == null || updateTime == null) {
+				getLogger().error("some param of ProductItem: " + productId + " is missing");
+				continue;
+			}
+			Date createDate;
+			try {
+				createDate = df.parse(sCreateTime);
+			} catch (Exception e) {
+				getLogger().error("createTime is invalid format", e);
+				continue;
+			}
+			long createTime = createDate.getTime() - (3600 * getTimeZoneGap());
+
+			// Get Attributes
+			Collection<PuObject> puAtts = productItem.getPuObjectArray(PI_SOLR_FE_PRODUCT_ATTRIBUTE);
+			List<AttributeValueVO> atts = new ArrayList<AttributeValueVO>();
+			if (puAtts == null) {
+				getLogger().debug("atts is null");
+			} else {
+				Set<Integer> attIds = new HashSet<Integer>();
+				for (PuObject puAtt : puAtts) {
+					Integer attId = puAtt.getInteger(PI_ATT_ID);
+					String attName = puAtt.getString(PI_ATT_NAME);
+					Integer attStatus = puAtt.getInteger(PI_ATT_STATUS);
+					String attValue = puAtt.getString(PI_ATT_VALUE);
+					Integer attValueId = puAtt.getInteger(PI_ATT_VALUE_ID);
+					if (attId == null || attName == null || attStatus == null || attValue == null || attValueId == null) {
+						getLogger().error("some parameters of attribute are null");
+						continue;
+					}
+
+					if (attIds.contains(attId)) {
+						continue;
+					}
+
+					AttributeValueVO attValueVO = new AttributeValueVO(attId, attName, attStatus, attValueId, attValue);
+					attIds.add(attId);
+					atts.add(attValueVO);
+				}
+			}
+			if (atts.isEmpty()) {
+				atts = null;
+			}
+			// End: Get Attributes
+
+			// Get warehouses
+			Collection<PuObject> puWarehouses = productItem.getPuObjectArray(PI_WH_PI_MAPPING);
+			if (puWarehouses == null) {
+				getLogger().error("warehouseProductItemMappings of " + productItemId + " is null");
+				continue;
+			}
+			List<ProductItemWarehouseProductItemMappingVO> whs = new ArrayList<ProductItemWarehouseProductItemMappingVO>();
+			for (PuObject puWh : puWarehouses) {
+				Integer warehouseProductItemMappingId = puWh.getInteger(PI_WH_PI_MAPPING_ID);
+				Integer merchantId = puWh.getInteger(PI_MC_ID);
+				Integer warehouseId = puWh.getInteger(PI_WH_ID);
+				String merchantName = puWh.getString(PI_MC_NAME);
+				String merchantSKU = puWh.getString(PI_MC_SKU);
+				Double originalPrice = puWh.getDouble(PI_ORI_PRICE);
+				Double sellPrice = puWh.getDouble(PI_SELL_PRICE);
+				Integer quantity = puWh.getInteger(PI_QUANTITY);
+				Integer safetyStock = puWh.getInteger(PI_SAFETY_STOCK);
+				Integer merchantProductItemStatus = puWh.getInteger(PI_MC_PI_STATUS);
+				Integer merchantStatus = puWh.getInteger(PI_MERCHANT_STATUS);
+				Integer warehouseStatus = puWh.getInteger(PI_WAREHOUSE_STATUS);
+				Integer provinceId = puWh.getInteger(PI_PROVINCE_ID);
+				Integer isVisible = puWh.getInteger(PI_IS_VISIBLE);
+				Integer priceStatus = puWh.getInteger(PI_PRICE_STATUS);
+				Integer vatStatus = puWh.getInteger(PI_VAT_STATUS);
+				if (warehouseProductItemMappingId == null || merchantId == null || warehouseId == null
+						|| merchantName == null || merchantSKU == null || originalPrice == null || sellPrice == null
+						|| quantity == null || safetyStock == null || merchantProductItemStatus == null
+						|| merchantStatus == null || warehouseStatus == null || provinceId == null || isVisible == null
+						|| vatStatus == null || priceStatus == null) {
+					getLogger().error(
+							"some parameters of  warehouseProductItemMapping of productItem: " + productItemId
+									+ " is missing");
+					continue;
+				}
+
+				ProductItemWarehouseProductItemMappingVO vo = new ProductItemWarehouseProductItemMappingVO(
+						warehouseProductItemMappingId, merchantId, warehouseId, merchantName, merchantSKU,
+						originalPrice, sellPrice, quantity, safetyStock, merchantProductItemStatus, merchantStatus,
+						warehouseStatus, provinceId, isVisible, updateTime, priceStatus, vatStatus);
+
+				merchantIds.add(merchantId);
+				warehouseIds.add(warehouseId);
+				warehousePIMappingIds.add(warehouseProductItemMappingId);
+				whs.add(vo);
+			}
+			if (whs.isEmpty()) {
+				getLogger().error("no warehouseProductItemMapping found");
+				continue;
+			}
+			// End Get Warehouse
+
+			productItemIds.add(productItemId);
+			brandIds.add(brandId);
+			categoryIds.add(categoryId);
+			ProductItemVO piVO = new ProductItemVO(productItemId, productId, brandId, brandName, categoryId, barcode,
+					productItemName, productItemStatus, brandStatus, categoryStatus, categoryPath, createTime,
+					freshFoodType, weight, productItemType, image, atts, whs, updateTime);
+			piVOs.add(piVO);
+		}
+
+		Map<Integer, Long> lastUpdateTimeOfProductItemCreates = productItemModel
+				.getLastUpdateTimeOfProductItemCreates(productItemIds);
+		Map<Integer, Long> lastUpdateTimeOfProductItemUpdates = productItemModel
+				.getLastUpdateTimeOfProductItemUpdates(productItemIds);
+		Map<Integer, BrandBean> cachedBrandBeans = brandModel.getBrandsByCache(brandIds);
+		// Map<Integer, CategoryBean> cachedCategoryBeans = categoryModel.getCategoriesByCache(categoryIds);
+		Map<Integer, MerchantBean> cachedMerchantBeans = merchantModel.getMerchantsByCache(merchantIds);
+		// Map<Integer, WarehouseBean> cachedWarehouseBean = warehouseModel.getWarehousesByCache(warehouseIds);
+		Map<Integer, Long> lastUpdateTimeOfWHPIMappings = warehouseProductItemMappingModel
+				.getLastUpdateTimeOfWarehouseProductItemMappings(warehousePIMappingIds);
+		// End: Get batch last update time from cache
+
+		List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+		for (ProductItemVO piVO : piVOs) {
+			List<SolrInputDocument> inputDocs = productItemModel.makeSolrDocumentForCreate(piVO,
+					lastUpdateTimeOfProductItemCreates, lastUpdateTimeOfProductItemUpdates, cachedBrandBeans,
+					cachedMerchantBeans, lastUpdateTimeOfWHPIMappings, updatedProductItemIds,
+					updatedProductItemIdTimes, updatedWarehouseProductItemMappingIds,
+					updatedWarehouseProductItemMappingIdTimes);
+			if (inputDocs != null) {
+				docs.addAll(inputDocs);
+			}
+
+			if (docs.size() >= productItemModel.getNumDocPerRequest()) {
+				productItemModel.add(docs);
+				docs = new ArrayList<SolrInputDocument>();
+			}
+		}
+		if (!docs.isEmpty()) {
+			productItemModel.add(docs);
+		}
+		if (productItemModel.isCommit()) {
+			productItemModel.commit();
+		}
+
+		productItemModel.updateToCacheForCreate(updatedProductItemIds, updatedProductItemIdTimes,
+				updatedWarehouseProductItemMappingIds, updatedWarehouseProductItemMappingIdTimes);
+
+	}
+}

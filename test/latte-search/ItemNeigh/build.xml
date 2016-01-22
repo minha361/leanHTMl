@@ -1,0 +1,87 @@
+<project name="item-neigh-handler" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="version">1.1.7</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="build.classes" value="bin" />
+	<property name="build.jar" value="dist/jar" />
+	<property name="dist" value="dist/${jar.name}" />
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="lib">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve conf="lib" pattern="lib/[artifact]-[revision](-[classifier]).[ext]" />
+		<ivy:retrieve conf="solr-lib" pattern="solr-lib/[artifact]-[revision](-[classifier]).[ext]" />
+	</target>
+
+	<target name="deploy" description="build jar file">
+		<delete failonerror="false">
+			<fileset dir="${build.jar}">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+		<delete dir="dist" />
+		<jar jarfile="${build.jar}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+
+		<!--<copydir src="deal" dest="${dist}/deal">
+		</copydir>
+		<copydir src="lib" dest="${dist}/deal/lib">
+		</copydir>-->
+		<copy todir="${dist}">
+			<fileset dir="${build.jar}" />
+		</copy>
+		<copy todir="${dist}">
+			<fileset dir="lib">
+			</fileset>
+		</copy>
+	</target>
+
+	<property name="ivy.pom.version" value="${version}" />
+
+	<target name="make-pom" depends="deploy">
+		<ivy:makepom ivyfile="ivy.xml" pomfile="${dist}/${jar.name}.pom" conf="lib" artifactpackaging="bundle">
+			<mapping conf="lib" scope="runtime">
+			</mapping>
+		</ivy:makepom>
+	</target>
+
+	<target name="update-ivy" depends="make-pom">
+		<sshexec command="mkdir -p /opt/nginx/lib/${ant.project.name}/${ant.project.name}/${version}" host="10.220.75.133" username="root" password="rootroot" trust="true" failonerror="false" />
+		<scp todir="root@10.220.75.133:/opt/nginx/lib/${ant.project.name}/${ant.project.name}/${version}" password="rootroot" trust="yes">
+			<fileset dir="${dist}" includes="${jar.name}.*" />
+		</scp>
+	</target>
+
+	<target name="m_jar">
+		<property name="m.path" value="../ItemNeigh" />
+		<property name="common.path" value="../CommonSearch" />
+
+
+		<delete failonerror="false">
+			<fileset dir="${m.path}/bin" />
+		</delete>
+		<mkdir dir="${m.path}/bin"/>
+
+		<javac srcdir="${m.path}/src" destdir="${m.path}/bin" source="1.8" encoding="UTF-8">
+			<classpath>
+				<fileset dir="${common.path}/lib"></fileset>
+				<fileset dir="${common.path}/solr-lib"></fileset>
+				<fileset dir="${m.build.jar}"></fileset>
+			</classpath>
+		</javac>
+
+		<property name="m.module.name" value="item-neigh"/>
+		<property name="m.module.version" value="1.1.7"/>
+		<jar jarfile="${m.build.jar}/${m.module.name}-${m.module.version}.jar">
+			<fileset dir="${m.path}/bin" />
+		</jar>
+	</target>
+</project>

@@ -1,0 +1,10 @@
+*/bin/
+*/dist/
+*/spark-lib/
+*cache-tests
+*cache-main
+AutoPhrase/lib/
+AutoPhrase/build-lib/
+CategoryTokenizer/lib/
+DIHTransformer/lib/
+LandingPageSearch/solr-lib

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hazelcast-client xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
+            http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.3.xsd"
+	xmlns="http://www.hazelcast.com/schema/client-config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<group>
+		<name>@name_hazelcast</name>
+		<password>@pass_hazelcast</password>
+	</group>
+	<network>
+		<cluster-members>
+			@iphazelcast
+		</cluster-members>
+		<smart-routing>true</smart-routing>
+		<redo-operation>true</redo-operation>
+	</network>
+	<executor-pool-size>16</executor-pool-size>
+</hazelcast-client>

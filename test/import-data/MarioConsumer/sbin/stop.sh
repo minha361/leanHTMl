@@ -1,0 +1,1 @@
+kill -9 `ps -ef | grep -v grep | grep -i marioconsumer | awk '{print $2}'`

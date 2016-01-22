@@ -1,0 +1,16 @@
+I.From Eclipse
+1. Config data sources(../conf/extract.conf):
+dbUser=root
+dbPass=minhlq
+docsPerPage=9000000
+dbUrl=jdbc:mysql://localhost/user_log?useUnicode=true&characterEncoding=utf-8
+
+productItemDbUrl=jdbc:sqlserver://10.220.75.25:1433;databaseName=Adayroi_CategoryManagement_ezibuy
+productItemDbUser=adruserfortest
+productItemDbPass=adruserfortest@qaz
+productItemPerPage=10000
+
+2. Run Class com.adr.extractlog.ExtractLog with startup folder is "startup"
+
+II.From Command Line
+1. Run startup.sh

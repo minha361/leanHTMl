@@ -1,0 +1,28 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="kafka-spark-producer" />
+
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java7" extends="default" description="Java 7 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+	</configurations>
+
+	<dependencies>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.10" />
+		<dependency org="net.minidev" name="json-smart" rev="2.1.1" />
+		<dependency org="org.jdbi" name="jdbi" rev="2.62" />
+		<dependency org="net.snaq" name="dbpool" rev="7.0-jdk7" />
+		<dependency org="com.google.code.gson" name="gson" rev="2.3.1" />
+		<dependency org="org.apache.solr" name="solr-solrj" rev="5.1.0" />
+	<!--	<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.1.0" /> 
+		<dependency org="org.apache.spark" name="spark-streaming_2.10" rev="1.1.0" />
+		<dependency org="org.apache.kafka" name="kafka_2.10" rev="0.8.0" />
+		<dependency org="org.apache.spark" name="spark-streaming-kafka_2.10" rev="1.1.0" />
+		<!-- <dependency org="com.lucidworks.spark" name="spark-solr_1.0" rev="1.0" /> -->
+<!-- 		<dependency org="com.google.code.gson" name="gson" rev="2.2.4" /> -->
+		<dependency org="org.apache.solr" name="solr-core" rev="5.1.0" />
+
+	</dependencies>
+
+</ivy-module>

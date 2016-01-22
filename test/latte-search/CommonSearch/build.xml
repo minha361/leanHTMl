@@ -1,0 +1,90 @@
+<project name="latte-search" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<!-- some variables used -->
+	<property name="app-name">latte-search</property>
+	<property name="version">1.0.8.beta.4</property>
+
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="lib.dir" value="lib" />
+	<property name="solr.lib" value="solr-lib" />
+	<property name="build.classes" value="bin" />
+	<property name="conf" value="conf" />
+	<property name="dist" value="dist/${jar.name}" />
+	<property name="build.classes" value="bin" />
+
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="${lib.dir}">
+			<include name="*.jar" />
+		</delete>
+		<delete dir="${solr.lib}">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+
+		<ivy:retrieve conf="lib" pattern="${lib.dir}/[artifact]-[revision](-[classifier]).[ext]" />
+		<ivy:retrieve conf="solr-lib" pattern="${solr.lib}/[artifact]-[revision](-[classifier]).[ext]" />
+	</target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" failonerror="false" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="deploy" depends="prep" description="build jar file">
+		<jar jarfile="${dist}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+
+		<copydir src="${lib.dir}" dest="${dist}">
+		</copydir>
+	</target>
+
+	<property name="ivy.pom.version" value="${version}"/>
+
+	<target name="make-pom" depends="deploy">
+		<ivy:makepom ivyfile="ivy.xml" pomfile="${dist}/${jar.name}.pom" conf="lib" artifactpackaging="bundle">
+				<mapping conf="lib" scope="runtime"></mapping>
+		</ivy:makepom>
+	</target>
+
+	<target name="update-ivy" depends="make-pom">
+		<sshexec command="mkdir -p /opt/nginx/lib/${ant.project.name}/${ant.project.name}/${version}" host="10.220.75.133" username="root" password="rootroot" trust="true" failonerror="false" />
+		<scp todir="root@10.220.75.133:/opt/nginx/lib/${ant.project.name}/${ant.project.name}/${version}" password="rootroot" trust="yes">
+			<fileset dir="${dist}" includes="${jar.name}.*" />
+		</scp>
+	</target>
+	
+	<target name="m_jar">
+		<property name="m.path" value="../CommonSearch"/>
+
+		<delete failonerror="false">
+			<fileset dir="${m.path}/bin" />
+		</delete>
+		
+		<mkdir dir="${m.path}/bin"/>
+		
+		<javac srcdir="${m.path}/src" destdir="${m.path}/bin" source="1.8" encoding="UTF-8" >
+			<classpath>
+				<fileset dir="${m.path}/lib"></fileset>
+				<fileset dir="${m.path}/solr-lib"></fileset>
+			</classpath>
+		</javac>
+		
+		<property name="m.module.name" value="latte-search"/>
+		<property name="m.module.version" value="1.0.9"/>
+
+
+		<jar jarfile="${m.build.jar}/${m.module.name}-${m.module.version}.jar">
+			<fileset dir="${m.path}/bin" />
+		</jar>
+	</target>
+</project>

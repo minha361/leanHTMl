@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="dictionary-from-log" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java8" extends="default" description="Java 8 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+		<conf name="lib"></conf>
+	</configurations>
+	<dependencies>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.38"/>
+	</dependencies>
+</ivy-module>

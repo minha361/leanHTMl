@@ -1,0 +1,27 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="module.name" value="product-cm" />
+	<property name="m.version" value="1.0.0" />
+
+	<target name="m_jar">
+		<property name="m.path" value="../ProductCM" />
+		<property name="common.path" value="../CommonSearch" />
+
+
+		<delete failonerror="false">
+			<fileset dir="${m.path}/bin" />
+		</delete>
+		<mkdir dir="${m.path}/bin"/>
+
+		<javac srcdir="${m.path}/src" destdir="${m.path}/bin" source="1.8" encoding="UTF-8" debug="true">
+			<classpath>
+				<fileset dir="${common.path}/lib"></fileset>
+				<fileset dir="${common.path}/solr-lib"></fileset>
+				<fileset dir="${m.build.jar}"></fileset>
+			</classpath>
+		</javac>
+
+		<jar jarfile="${m.build.jar}/${module.name}-${m.version}.jar">
+			<fileset dir="${m.path}/bin" />
+		</jar>
+	</target>
+</project>

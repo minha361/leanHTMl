@@ -1,0 +1,388 @@
+﻿sữa,618,NULL
+bia,713,NULL
+sữa,716,NULL
+dầu ăn,675,NULL
+sữa chua,627,NULL
+xúc xích,655,NULL
+sữa tươi,716,NULL
+bánh,697,NULL
+cafe,713,NULL
+mì,671,10
+cá hồi,596,NULL
+rong biển,708,NULL
+rau,639,NULL
+cà chua,639,NULL
+đường,674,NULL
+bơ,628,NULL
+cà phê,713,NULL
+mật ong,669,NULL
+gạo,684,NULL
+bánh bao,649,NULL
+sữa đậu nành,621,NULL
+trà,713,NULL
+cá,596,NULL
+sâm,692,NULL
+bột canh,676,NULL
+bia hà nội,696,NULL
+ngũ cốc,685,NULL
+sữa bột,622,NULL
+sữa đặc,622,NULL
+khoai tây,639,NULL
+nấm,646,NULL
+kẹo,697,NULL
+thịt,600,NULL
+kim chi,649,NULL
+socola,706,NULL
+neptune,675,NULL
+cà rốt,639,NULL
+gà,603,NULL
+simply,675,NULL
+táo,642,NULL
+trứng,612,NULL
+cá trứng,656,NULL
+trứng gà,613,NULL
+tỏi,641,NULL
+hải sản,596,NULL
+pizza,649,NULL
+miến,672,NULL
+muối,676,NULL
+tôm,596,NULL
+bbq,679,NULL
+rượu,696,NULL
+sua chua,625,NULL
+mỳ,672,NULL
+rau muống,640,NULL
+đậu,645,NULL
+nước khoáng,713,NULL
+yến mạch,685,NULL
+hạt điều,709,NULL
+kiwi,642,NULL
+nước tương,678,NULL
+bim bim,708,NULL
+chanh,642,NULL
+hành,639,NULL
+hành lá,639,NULL
+mít,642,NULL
+dấm,676,NULL
+hành tây,641,NULL
+gia vị,676,NULL
+mực,596,NULL
+sua tuoi,619,NULL
+trà xanh,713,NULL
+ổi,642,NULL
+cháo,673,NULL
+yến,693,NULL
+chuối,642,NULL
+dầu oliu,675,NULL
+đậu nành,709,NULL
+banh,697,NULL
+ngô,639,NULL
+thịt gà,603,NULL
+chocolate,706,NULL
+sườn,600,NULL
+sữa chua uống,626,NULL
+tiger,696,NULL
+xoài,642,NULL
+bút chì,342,NULL
+giày thể thao,1215,NULL
+kệ,1151,NULL
+nệm,1138,NULL
+giay,1215,NULL
+khăn giấy,770,NULL
+giấy vệ sinh,946,NULL
+xà đơn,1277,NULL
+cốc,867,NULL
+cây lau nhà,950,NULL
+mũ nam,1308,NULL
+yoga,1250,NULL
+chúng ta rồi sẽ ổn thôi,820,NULL
+túi,388,NULL
+khăn,750,NULL
+hạt giống,1006,NULL
+qu%u1ea1t,468,NULL
+tony,820,NULL
+đèn led,998,NULL
+50 sắc thái,820,NULL
+đèn led,998,NULL
+nồi sứ,877,NULL
+xà phòng,220,NULL
+nồi thuỷ tinh luminarc,877,NULL
+giay,47,NULL
+chúng ta rồi sẽ ổn thôi,1393,NULL
+bình giữ nhiệt,882,NULL
+giỏ hoa,1152,NULL
+tạ,1261,NULL
+bút chì màu,342,NULL
+gym,1330,NULL
+ổ cắm,1481,NULL
+kem đánh răng,243,NULL
+khóa xe,1234,NULL
+thùng đá,1295,NULL
+đèn,999,NULL
+máy hút bụi,541,NULL
+trượt ván,1362,NULL
+từ điển tiếng nhật,1393,NULL
+ghế,1186,NULL
+máy sấy tóc,534,NULL
+thảm,1084,NULL
+quạt,468,NULL
+đệm,825,NULL
+xe đạp,839,NULL
+bàn,806,NULL
+đồng hồ,1156,NULL
+cân điện tử,257,NULL
+đồng hồ để bàn,1156,NULL
+dao,874,NULL
+giấy vệ sinh,942,NULL
+giấy ăn,942,NULL
+doraemon,1393,NULL
+cân,892,NULL
+tiểu thuyết việt nam,1393,NULL
+tủ nhựa,997,NULL
+vision,861,NULL
+cây lau nhà,949,NULL
+ghế văn phòng,806,NULL
+phim,431,NULL
+xe dap,839,NULL
+bàn,806,NULL
+ghế,806,NULL
+cà phê cùng tony,9416,NULL
+ly,867,NULL
+xe máy,1077,NULL
+bàn làm việc,806,NULL
+bình giữ nhiệt,736,NULL
+banh,1334,NULL
+bếp ga,911,NULL
+gương,1155,NULL
+khóa,1104,NULL
+tủ quần áo,818,NULL
+đệm ,822,NULL
+đĩa,864,NULL
+ariel,954,NULL
+chăn,1134,NULL
+miband,1803,NULL
+ps3,575,NULL
+ps4,580,NULL
+đồng hồ theo dõi sức khỏe,1803,NULL
+đồng hồ vòng tay,430,NULL
+dualshock,575,NULL
+máy chơi game cầm tay,430,NULL
+máy ps4,575,NULL
+play station,575,NULL
+psp 3001,575,NULL
+vòng đeo tay miband,1803,NULL
+vong deo tay suc khoe,1803,NULL
+xe cân bằng,913,NULL
+xe trượt,839,NULL
+samsung j1,325,NULL
+g530 ,325,NULL
+loa di động,341,NULL
+samsung galaxy grand prime,325,NULL
+g531,325,NULL
+galaxy j5 ,325,NULL
+samsung j5,325,NULL
+tai nghe,341,NULL
+galaxy j1,325,NULL
+samsung galaxy core prime,325,NULL
+galaxy core prime,325,NULL
+dàn âm thanh,439,NULL
+máy nghe nhạc,374,NULL
+6s,324,NULL
+ip6,324,NULL
+ip6s,324,NULL
+s6,325,NULL
+samsung s6,325,NULL
+s6 edge,325,NULL
+samsung j7,325,NULL
+j7,325,NULL
+máy ghi âm,463,NULL
+loa bộ,444,NULL
+asus fonepad 7,330,NULL
+fonepad 7,330,NULL
+note 3,325,NULL
+note 4,325,NULL
+note 5,325,NULL
+s5,325,NULL
+samsung s5,325,NULL
+galaxy s5,325,NULL
+galaxy a3,325,NULL
+a3,325,NULL
+samsung a3,325,NULL
+samsung galaxy a5,325,NULL
+43lf630t,575,NULL
+galaxy a5,325,NULL
+samsung a5,325,NULL
+a5,325,NULL
+tivi sony 42 inch,575,NULL
+samsung galaxy a7,325,NULL
+samsung a7,325,NULL
+galaxy a7,325,NULL
+a7,325,NULL
+samsung galaxy a8,325,NULL
+48r550,575,NULL
+samsung a8,325,NULL
+galaxy a8,325,NULL
+a8,325,NULL
+sony xperia e1,325,NULL
+sony e1,325,NULL
+xperia e1,325,NULL
+sony xperia e4 ,325,NULL
+xperia e4 ,325,NULL
+sony e4 ,325,NULL
+sony xperia m4,325,NULL
+xperia m4,325,NULL
+sony xperia m5,325,NULL
+xperia m5,325,NULL
+sony xperia c3,325,NULL
+tivi android,575,NULL
+xperia c3,325,NULL
+sony xperia c4,325,NULL
+xperia c4,325,NULL
+máy ảnh kỹ thuật số,408,NULL
+sony xperia c5,325,NULL
+xperia c5,325,NULL
+sony xperia z2,325,NULL
+xperia z2,325,NULL
+sony xperia z3,325,NULL
+xperia z3,325,NULL
+1200d,408,NULL
+máy ảnh chụp lấy ngay,408,NULL
+máy ảnh du lịch,408,NULL
+ống nhòm hồng ngoại,412,NULL
+tủ lạnh,477,NULL
+điều hòa,464,NULL
+máy lạnh,1773,NULL
+máy giặt,490,NULL
+máy sấy,489,NULL
+máy sấy quần áo,489,NULL
+electrolux,490,NULL
+kangaroo,1773,NULL
+sanaky,477,NULL
+general,1773,NULL
+tristar,1773,NULL
+alaska,485,NULL
+ixor,485,NULL
+vtb,1773,NULL
+máy giặt teka,490,NULL
+tiross,1773,NULL
+bosch,1773,NULL
+gorenje,477,NULL
+hl1111,547,NULL
+thiết bị văn phòng,545,NULL
+photo,545,NULL
+rong biển,707,NULL
+gạo lứt,684,NULL
+cá hồi,656,NULL
+sữa,617,NULL
+hạt điều,707,NULL
+kim chi,665,NULL
+sữa chua,625,NULL
+bột mì,686,NULL
+bột gạo,686,NULL
+sữa tươi,618,NULL
+milo,713,NULL
+gạo nhật,684,NULL
+samsung galaxy,325,3
+samsung galaxy,328,3
+samsung,323,3
+samsung,328,3
+samsung,1773,3
+galaxy,325,3
+galaxy,328,3
+apple,323,3
+apple,329,3
+mì gói,671,3
+laptop.*,350,3
+may tinh,349,3
+vay,30,3
+dam,30,3
+dam,678,3
+quan,41,3
+quan,81,3
+quan,18,3
+non,78,3
+non,118,3
+man hinh,349,3
+man hinh,356,3
+chuot,378,3
+chăn,1131,3
+chăn,822,3
+áo,1,3
+bơ,629,3
+bơ,642,3
+táo.*,642,3
+hành.*,639,3
+xoài.*,639,3
+lumia,323,3
+ipad.*,329,3
+s6.*,325,3
+s5.*,325,3
+s4.*,325,3
+cáp.*,346,3
+nước hoa.*,169,3
+headphone.*,374,3
+headphone.*,341,3
+tai nghe.*,374,3
+tai nghe.*,341,3
+bàn,1130,3
+bàn,1108,3
+bàn,1121,3
+bàn,1185,3
+but chi mau,1440,3
+vali,1296,3
+sofa,1110,3
+sofa,1109,3
+usb,360,3
+gối,1133,3
+gối,822,3
+gối,823,3
+gối,1295,3
+từ điển tiếng anh,1392,3
+tu dien tieng anh,1392,3
+macbook.*,351,3
+đũa,871,3
+tivi,399,3
+loa,373,3
+lò vi sóng,898,3
+den sac,999,3
+đèn sạc,999,3
+banh nuong,611,3
+đậu phộng,673,3
+đậu phộng,680,3
+đậu phộng,709,3
+dau phong,673,3
+dau phong,680,3
+dau phong,709,3
+lạc,673,3
+lạc,680,3
+lạc,709,3
+iphone.*,324,100
+tôm,656,3
+cá,656,3
+sony z.*,325,200
+galaxy a5.*,325,100
+galaxy s6,325,100
+giay,1,3
+hạnh nhân,591,3
+sườn,595,3
+chảo inox,880,3
+bếp,897,3
+lumia 625,326,3
+đường kính,591,3
+htc one m8,325,3
+kem,143,3
+kem,617,3
+chè,591,3
+điện thoại sony,325,150
+nhẫn,1,3
+nem,657,3
+pin sạc,321,3
+zenfone,325,3
+zenfone 2,325,3
+kem danh rang,245,3
+bia,696,1
+iphone 5,324,1
+zenfone.*,325,1
+tv,399,100
+hoa,658,1
+ehon,1387,NULL

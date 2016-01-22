@@ -1,0 +1,27 @@
+<ivy-module version="2.0">
+	<info organisation="lib.latte-search" module="latte-search" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java8" extends="default" description="Java 8 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+		<conf name="lib"></conf>
+		<conf name="solr-lib"></conf>
+	</configurations>
+	<dependencies>
+		<dependency org="lib.mssql" name="sqljdbc4" rev="3.0" conf="lib->default" />	
+		<dependency org="com.hazelcast" name="hazelcast-client" rev="3.4.2" conf="lib->default" />
+		
+		<dependency org="org.apache.solr" name="solr-core" rev="5.1.0" conf="solr-lib->default" />
+		<dependency org="org.apache.solr" name="solr-dataimporthandler" rev="5.1.0" conf="solr-lib->default"/>
+
+		<dependency org="lib.nhb" name="nhb-common" rev="0.0.1" conf="lib->default" />
+		<dependency org="lib.nhb" name="nhb-common-db" rev="0.0.1" conf="lib->default" />
+		<dependency org="org.msgpack" name="msgpack" rev="0.6.12" conf="lib->default" />
+		<dependency org="net.minidev" name="json-smart" rev="2.2" conf="lib->default" />
+		<dependency org="com.lmax" name="disruptor" rev="3.2.0" conf="lib->default" />
+		<dependency org="org.jdbi" name="jdbi" rev="2.62" conf="lib->default" />
+		<dependency org="net.snaq" name="dbpool" rev="7.0-jdk7" conf="lib->default" />
+		<dependency org="com.google.code.gson" name="gson" rev="2.3.1" conf="lib->default" />
+	</dependencies>
+</ivy-module>

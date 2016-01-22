@@ -1,0 +1,23 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="nhb-common-db" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java7" extends="default" description="Java 7 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+	</configurations>
+
+	<dependencies>
+		<!-- logging libs -->
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.10" />
+
+		<!-- database -->
+		<dependency org="org.jdbi" name="jdbi" rev="2.62" />
+		<dependency org="net.snaq" name="dbpool" rev="7.0-jdk7" />
+
+		<!-- utilities -->
+		<dependency org="com.google.code.gson" name="gson" rev="2.3.1" />
+		<dependency org="org.antlr" name="stringtemplate" rev="3.2" />
+
+	</dependencies>
+</ivy-module>
