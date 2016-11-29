@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Page Title</title>
+   </head>
+   <body>
+      <div>
+         Registration closes in
+  <span id="timer">05:00<span> minutes!
+      </div>
+      <script>
+         window.onload = function(){
+           var sec = 2*60;
+           var stopped = false;
+           setInterval(function(){		 
+             document.getElementById("timer").innerHTML = Math.floor(sec/60) +" : " + sec % 60 ; 
+             if (stopped){
+                  return;
+             }
+             sec--;
+             if (sec == 0){
+                  stopped = true;
+                  return;
+             }
+            },1000);
+          }
+          
+      </script>
+   </body>
+</html>
